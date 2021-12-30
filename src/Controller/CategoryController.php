@@ -53,6 +53,7 @@ class CategoryController extends Controller
 
     public function editAction()
     {
+        View::set(['title' => "Edycja kategorii"]);
         $category = $this->category();
         $names = ['name', 'image'];
 
@@ -70,6 +71,11 @@ class CategoryController extends Controller
         } else {
             $this->view->render("category/edit", ['category' => $category]);
         }
+    }
+
+    public function delete()
+    {
+        $category = $this->category();
     }
 
     // =====

@@ -71,4 +71,8 @@ class CategoryRepository extends Repository
 
         $stmt->execute($data);
     }
+
+    public function delete(){
+        
+    }
 }

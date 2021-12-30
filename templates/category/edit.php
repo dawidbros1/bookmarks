@@ -39,11 +39,28 @@ $category = $params['category'];
 
                     <input type = "hidden" name = "id" value = "<?=$category->id?>">
 
-                    <div class="d-grid col-12 mx-auto mt-3">
-                        <button class="btn btn-primary" type="submit"><span></span> Edytuj kategorie </button>
+                    <div class="d-flex">
+                        <div class="d-grid col-9 mt-3">
+                            <button class="btn btn-primary" type="submit"> Edytuj kategorie </button>
+                        </div>
+
+                        <div class="d-grid offset-1 col-2 mt-3">
+                            <button id = "delete" class="btn btn-danger" type = "button" class="btn btn-danger" data-bs-toggle="collapse" data-bs-target=".delete" aria-expanded="false"> USUŃ </button>
+                        </div>
                     </div>
                 </form>
+
+                <div class="collapse delete">
+                    <p class = "border-top text-center fw-bold"> Czy jesteś pewien, że chcesz usunąć wybraną kategorię? </p>
+
+                    <form action = "<?=$route->get('category.delete')?>" method = "POST">
+                        <input type = "hidden" name = "id" value = "<?=$category->id?>">
+                        <button class="btn btn-danger col-12" type = "submit"> Tak </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<script> initDeleteButton(); </script>

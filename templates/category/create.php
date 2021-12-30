@@ -36,7 +36,7 @@ use App\Helper\Session;
                     </div>
 
                     <div class="d-grid col-12 mx-auto mt-3">
-                        <button class="btn btn-primary" type="submit"><span></span> Utwórz kategorie </button>
+                        <button class="btn btn-primary" type="submit"> Utwórz kategorie </button>
                     </div>
                 </form>
             </div>

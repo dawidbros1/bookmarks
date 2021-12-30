@@ -8,3 +8,13 @@ function initCloseAlertButtons() {
         })
     }
 }
+
+function initDeleteButton() {
+    index = 1;
+    values = ['USUŃ', "UKRYJ"];
+    button = document.getElementById('delete');
+
+    button.addEventListener('click', () => {
+        button.innerHTML = values[index++ % 2];
+    });
+}
