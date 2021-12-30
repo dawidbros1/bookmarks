@@ -1,0 +1,43 @@
+body {
+    background-color: lightgray;
+}
+
+div.container-fluid {
+    margin: 0;
+    padding: 0;
+}
+
+.fs-mini {
+    font-size: 13px;
+}
+
+.link {
+    color: #0d6efd !important;
+    text-decoration: none;
+}
+
+#username {
+    right: 10px;
+}
+
+.alert {
+    margin-bottom: 0 !important;
+}
+
+.text-white{
+    color: white;
+}
+
+.navbar-toggler-icon{
+    width: 20px;
+    height: 20px;
+}
+
+.navbar-toggler{
+    padding: .125rem .375rem;
+}
+
+.labels {
+    font-size: 12px;
+    font-weight: bold;
+}
