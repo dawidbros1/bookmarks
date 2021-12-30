@@ -29,9 +29,10 @@ class CategoryController extends Controller
 
         if ($this->request->isPost() && $this->request->hasPostNames($names)) {
             $data = $this->request->postParams($names);
-            $data['private'] = CheckBox::get($this->request->postParam('private', false));
 
             if ($this->validate($data, $this->rules)) {
+                $data['private'] = CheckBox::get($this->request->postParam('private', false));
+                $data['user_id'] = $this->user->id;
                 $category = new Category($data);
                 $category->escape();
                 $this->repository->create($category);
@@ -47,7 +48,12 @@ class CategoryController extends Controller
     public function listAction()
     {
         View::set(['style' => 'item']);
-        $categories = $this->repository->getAll();
+        $categories = $this->repository->getAll($this->user->id);
         $this->view->render('category/list', ['categories' => $categories]);
+    }
+
+    public function editAction()
+    {
+        
     }
 }

@@ -14,12 +14,13 @@ class CategoryRepository extends Repository
     {
         try {
             $data = [
+                'user_id' => $category->user_id,
                 'name' => $category->name,
                 'image' => $category->image,
                 'private' => $category->private,
             ];
 
-            $sql = "INSERT INTO categories (name, image, private) VALUES (:name, :image, :private)";
+            $sql = "INSERT INTO categories (name, user_id, image, private) VALUES (:name, :user_id, :image, :private)";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute($data);
         } catch (Throwable $e) {
@@ -27,12 +28,12 @@ class CategoryRepository extends Repository
         }
     }
 
-    public function getAll()
+    public function getAll(int $user_id)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM categories");
-        $stmt->execute();
-        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $this->pdo->prepare("SELECT * FROM categories WHERE user_id=:user_id");
+        $stmt->execute(['user_id' => $user_id]);
 
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $categories = [];
 
         foreach ($data as $item) {

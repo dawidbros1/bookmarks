@@ -20,7 +20,7 @@ class User extends Model
 
     public function __construct($data)
     {
-        $this->id = $data['id'] ?? null;
+        $this->id = (int) $data['id'] ?? null;
         $this->username = $data['username'];
         $this->email = $data['email'];
         $this->password = $data['password'];

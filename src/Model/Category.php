@@ -7,6 +7,7 @@ namespace App\Model;
 class Category extends Model
 {
     public $id;
+    public $user_id;
     public $name;
     public $image;
     public $private;
@@ -16,6 +17,7 @@ class Category extends Model
     public function __construct($data)
     {
         $this->id = $data['id'] ?? null;
+        $this->user_id = $data['user_id'];
         $this->name = $data['name'];
         $this->image = $data['image'];
         $this->private = $data['private'];
