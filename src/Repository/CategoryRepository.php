@@ -12,6 +12,8 @@ class CategoryRepository extends Repository
 {
     public function create(Category $category): void
     {
+        $category->escape();
+
         try {
             $data = [
                 'user_id' => $category->user_id,
@@ -41,5 +43,32 @@ class CategoryRepository extends Repository
         }
 
         return $categories;
+    }
+
+    public function get(int $id)
+    {
+        $category = null;
+        $stmt = $this->pdo->prepare("SELECT * FROM categories WHERE id=:id");
+        $stmt->execute(['id' => $id]);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($data != false) {$category = new Category($data);}
+        return $category;
+    }
+
+    public function update(Category $category)
+    {
+        $category->escape();
+        $data = [
+            'id' => $category->id,
+            'name' => $category->name,
+            'image' => $category->image,
+            'private' => $category->private,
+        ];
+
+        $sql = "UPDATE categories SET name=:name, image=:image, private=:private WHERE id=:id";
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute($data);
     }
 }

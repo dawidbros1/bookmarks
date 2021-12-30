@@ -29,12 +29,11 @@ class CategoryController extends Controller
 
         if ($this->request->isPost() && $this->request->hasPostNames($names)) {
             $data = $this->request->postParams($names);
+            $data['private'] = CheckBox::get($this->request->postParam('private', false));
+            $data['user_id'] = $this->user->id;
 
             if ($this->validate($data, $this->rules)) {
-                $data['private'] = CheckBox::get($this->request->postParam('private', false));
-                $data['user_id'] = $this->user->id;
                 $category = new Category($data);
-                $category->escape();
                 $this->repository->create($category);
                 Session::set('success', 'Kategoria została utworzona');
             }
@@ -47,13 +46,63 @@ class CategoryController extends Controller
 
     public function listAction()
     {
-        View::set(['style' => 'item']);
+        View::set(['title' => "Moje kategorie", 'style' => 'item']);
         $categories = $this->repository->getAll($this->user->id);
         $this->view->render('category/list', ['categories' => $categories]);
     }
 
     public function editAction()
     {
-        
+        $category = $this->category();
+        $names = ['name', 'image'];
+
+        if ($this->request->isPost() && $this->request->hasPostNames($names)) {
+            $data = $this->request->postParams($names);
+            $data['private'] = CheckBox::get($this->request->postParam('private', false));
+
+            if ($this->validate($data, $this->rules)) {
+                $category->update($data);
+                $this->repository->update($category);
+                Session::set('success', 'Kategoria została zaktualizowana');
+            }
+
+            $this->redirect(self::$route->get('category.edit') . "&id=" . $category->id);
+        } else {
+            $this->view->render("category/edit", ['category' => $category]);
+        }
+    }
+
+    // =====
+
+    private function category()
+    {
+        $error = false;
+
+        if ($this->request->isPost()) {
+            $id = $this->request->postParam('id');
+        } else {
+            $id = $this->request->getParam('id');
+        }
+
+        if ($id == null) {
+            Session::set('error', 'Brak identyfikatora kategorii');
+            $error = true;
+        }
+
+        if ($error == false && !$category = $this->repository->get((int) $id)) {
+            Session::set('error', 'Kategoria o podanym ID nie istnieje');
+            $error = true;
+        }
+
+        if ($error == false && $category->user_id != $this->user->id) {
+            Session::set('error', 'Podana kategorie nie należy do ciebie');
+            $error = true;
+        }
+
+        if ($error == true) {
+            $this->redirect(self::$route->get('category.list'));
+        } else {
+            return $category;
+        }
     }
 }
