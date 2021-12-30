@@ -17,6 +17,7 @@ $config = require_once 'config/config.php';
 $route = require_once 'routes/routes.php';
 
 use App\Controller\AuthController;
+use App\Controller\CategoryController;
 use App\Controller\Controller;
 use App\Controller\GeneralController;
 use App\Controller\UserController;
@@ -34,6 +35,7 @@ try {
     if ($type == "auth") {(new AuthController($request))->run();} //
     else if ($type == "user") {(new UserController($request))->run();} //
     else if ($type == "general") {(new GeneralController($request))->run();} //
+    else if ($type == "category") {(new CategoryController($request))->run();} //
     else {(new GeneralController($request))->run();} //
 
 } catch (ConfigurationException $e) {

@@ -33,10 +33,9 @@ class Model
         $properties = get_object_vars($this);
 
         foreach ($properties as $key => $value) {
-            if ($value != null) {
+            if ($value != null && gettype($value) == "string") {
                 $this->$key = htmlentities($value);
             }
-
         }
     }
 }

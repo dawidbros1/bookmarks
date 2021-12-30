@@ -38,9 +38,9 @@
                 <ul class="navbar-nav me-auto">
                     <?php if ($user): ?>
                         <div class = "d-sm-flex <?=$margin?>">
-                            <li class="nav-item"> <a class="nav-link" href="#">Link 1</a></li>
-                            <li class="nav-item"> <a class="nav-link" href="#">Link 2</a></li>
-                            <li class="nav-item"> <a class="nav-link" href="#">Link 3</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="<?=$route->get('category.list')?>">Kategorie</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="<?=$route->get('category.create')?>">Dodaj kategorie</a></li>
+                            <!-- <li class="nav-item"> <a class="nav-link" href="#">Link 3</a></li> -->
                         </div>
 
                         <div class = "d-sm-none border-top"></div>
@@ -95,9 +95,8 @@
 
    <!-- Remove the container if you want to extend the Footer to full width. -->
 
-
-<footer class="bg-dark text-center text-white position-fixed w-100 bottom-0">
-    <div class="text-center p-2" style="background-color: rgba(0, 0, 0, 0.2);">
+<footer class="bg-dark text-center text-white position-relative w-100 bottom-0">
+    <div class="text-center" style="background-color: rgba(0, 0, 0, 0.2);">
         Treść stopki
     </div>
 </footer>
