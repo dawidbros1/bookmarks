@@ -4,29 +4,22 @@ declare (strict_types = 1);
 
 namespace App\Model;
 
-class Category extends Model
+class Page extends Model
 {
     public $id;
-    public $user_id;
+    public $category_id;
     public $name;
     public $image;
-    public $private;
-    public $pages;
+    public $link;
 
     private static $config;
 
     public function __construct($data)
     {
         $this->id = $data['id'] ?? null;
-        $this->user_id = $data['user_id'];
+        $this->category_id = $data['category_id'];
         $this->name = $data['name'];
         $this->image = $data['image'];
-        $this->private = $data['private'];
-        $this->pages = [];
-    }
-
-    public function addPages($pages)
-    {
-        $this->pages = $pages ?? [];
+        $this->link = $data['link'];
     }
 }

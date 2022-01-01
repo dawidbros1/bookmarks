@@ -20,6 +20,7 @@ use App\Controller\AuthController;
 use App\Controller\CategoryController;
 use App\Controller\Controller;
 use App\Controller\GeneralController;
+use App\Controller\PageController;
 use App\Controller\UserController;
 use App\Exception\AppException;
 use App\Exception\ConfigurationException;
@@ -36,6 +37,7 @@ try {
     else if ($type == "user") {(new UserController($request))->run();} //
     else if ($type == "general") {(new GeneralController($request))->run();} //
     else if ($type == "category") {(new CategoryController($request))->run();} //
+    else if ($type == "page") {(new PageController($request))->run();} //
     else {(new GeneralController($request))->run();} //
 
 } catch (ConfigurationException $e) {

@@ -76,7 +76,7 @@ class CategoryController extends Controller
     public function deleteAction()
     {
         if ($this->request->isPost()) {
-            $category = $this->category();
+            $category = $this->category(false);
             $this->repository->delete($category);
             Session::set('success', 'Kategoria usunięta');
         } else {
@@ -86,37 +86,24 @@ class CategoryController extends Controller
         $this->redirect(self::$route->get('category.list'));
     }
 
+    public function showAction()
+    {
+        $category = $this->category();
+        View::set(['title' => $category->name, 'style' => 'item']);
+        $this->view->render('category/show', ['category' => $category]);
+    }
+
     // =====
 
-    private function category()
+    private function category(bool $pages = true)
     {
-        $error = false;
+        $id = (int) $this->request->param('id');
 
-        if ($this->request->isPost()) {
-            $id = $this->request->postParam('id');
-        } else {
-            $id = $this->request->getParam('id');
-        }
-
-        if ($id == null) {
-            Session::set('error', 'Brak identyfikatora kategorii');
-            $error = true;
-        }
-
-        if ($error == false && !$category = $this->repository->get((int) $id)) {
-            Session::set('error', 'Kategoria o podanym ID nie istnieje');
-            $error = true;
-        }
-
-        if ($error == false && $category->user_id != $this->user->id) {
-            Session::set('error', 'Podana kategorie nie należy do ciebie');
-            $error = true;
-        }
-
-        if ($error == true) {
+        if (!$this->repository->author($this->user, $id)) {
+            Session::set('error', 'Brak uprawnień do tego zasobu');
             $this->redirect(self::$route->get('category.list'));
         } else {
-            return $category;
+            return $this->repository->get((int) $id, $pages);
         }
     }
 }

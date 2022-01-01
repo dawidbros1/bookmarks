@@ -5,6 +5,8 @@ declare (strict_types = 1);
 namespace App\Repository;
 
 use App\Model\Category;
+use App\Model\Page;
+use App\Model\User;
 use App\Repository\Repository;
 use PDO;
 
@@ -45,14 +47,21 @@ class CategoryRepository extends Repository
         return $categories;
     }
 
-    public function get(int $id)
+    public function get(int $id, bool $pages)
     {
         $category = null;
         $stmt = $this->pdo->prepare("SELECT * FROM categories WHERE id=:id");
         $stmt->execute(['id' => $id]);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($data != false) {$category = new Category($data);}
+        if ($data != false) {
+            $category = new Category($data);
+
+            if ($pages) {
+                $category->addPages($this->pages($category));
+            }
+        }
+
         return $category;
     }
 
@@ -76,5 +85,29 @@ class CategoryRepository extends Repository
     {
         $sql = "DELETE FROM categories WHERE id = :id";
         $this->pdo->prepare($sql)->execute(['id' => $category->id]);
+    }
+
+    private function pages(Category $category)
+    {
+        $pages = [];
+        $stmt = $this->pdo->prepare("SELECT * FROM pages WHERE category_id=:category_id");
+        $stmt->execute(['category_id' => $category->id]);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!empty($data)) {
+            foreach ($data as $item) {
+                $pages[] = new Page($item);
+            }
+        }
+
+        return $pages;
+    }
+
+    public function author(User $user, $id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM categories WHERE id=:id AND user_id=:user_id");
+        $stmt->execute(['id' => $id, 'user_id' => $user->id]);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (empty($data)) {return false;} else {return true;};
     }
 }
