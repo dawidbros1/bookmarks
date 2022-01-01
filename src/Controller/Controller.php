@@ -59,7 +59,7 @@ abstract class Controller extends Validator
         try {
             $action = $this->action() . 'Action';
             if (!method_exists($this, $action)) {
-                Session::set("error", 'Akcja do której chciałeś otrzymać dostęp nie istnieje');
+                Session::set("error", 'Wybrana akcja nie istnieje');
                 $this->redirect("./");
             }
 

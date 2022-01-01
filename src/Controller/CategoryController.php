@@ -73,9 +73,17 @@ class CategoryController extends Controller
         }
     }
 
-    public function delete()
+    public function deleteAction()
     {
-        $category = $this->category();
+        if ($this->request->isPost()) {
+            $category = $this->category();
+            $this->repository->delete($category);
+            Session::set('success', 'Kategoria usunięta');
+        } else {
+            Session::set('error', 'Błąd dostępu do wybranej akcji');
+        }
+
+        $this->redirect(self::$route->get('category.list'));
     }
 
     // =====

@@ -72,7 +72,9 @@ class CategoryRepository extends Repository
         $stmt->execute($data);
     }
 
-    public function delete(){
-        
+    public function delete(Category $category)
+    {
+        $sql = "DELETE FROM categories WHERE id = :id";
+        $this->pdo->prepare($sql)->execute(['id' => $category->id]);
     }
 }
