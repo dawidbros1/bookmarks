@@ -80,7 +80,7 @@ class CategoryController extends Controller
         if ($this->request->isPost()) {
             $category = $this->category(false);
             $this->repository->delete($category);
-            Session::set('success', 'Kategoria usunięta');
+            Session::set('success', 'Kategoria została usunięta');
         } else {
             Session::set('error', 'Błąd dostępu do wybranej akcji');
         }
