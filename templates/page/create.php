@@ -11,13 +11,13 @@ use App\Helper\Session;
     <div class="rounded d-flex justify-content-center">
         <div class="col-xl-5 col-lg-6 col-md-8 col-sm-11 col-12 shadow-lg p-5 bg-light">
             <div class="text-center">
-                <h3 class="text-primary">Dodawanie kategorii</h3>
+                <h3 class="text-primary">Dodawanie strony</h3>
             </div>
             <div class="p-4">
-                <form action="<?=$route->get('category.create')?>" method="post">
+                <form action="<?=$route->get('page.create')?>" method="post">
                     <div class="input-group">
                         <span class="input-group-text bg-primary"></span>
-                        <input type="name" name="name" class="form-control" placeholder="Nazwa kategorii" value="<?=$params['name'] ?? ''?>">
+                        <input type="name" name="name" class="form-control" placeholder="Nazwa strony" value="<?=$params['name'] ?? ''?>">
                     </div>
 
                     <?php Error::render('input', Session::getNextClear('error:name:between'))?>
@@ -30,13 +30,18 @@ use App\Helper\Session;
                     <?php Error::render('input', Session::getNextClear('error:image:max'))?>
                     <?php Error::render('input', Session::getNextClear('error:image:require'))?>
 
-                    <div class="form-check mt-2 border-top">
-                        <input class="form-check-input" type="checkbox" id="private" name = "private">
-                        <label class="form-check-label" for="private"> Kategoria prywatna </label>
+                    <div class="input-group mt-3">
+                        <span class="input-group-text bg-primary"></span>
+                        <input type="text" name="link" class="form-control" placeholder="Link" value="<?=$params['link'] ?? ''?>">
                     </div>
 
+                    <?php Error::render('input', Session::getNextClear('error:link:max'))?>
+                    <?php Error::render('input', Session::getNextClear('error:link:require'))?>
+
+                    <input type = "hidden" name = "category_id" value = "<?=$params['category_id']?>">
+
                     <div class="d-grid col-12 mx-auto mt-3">
-                        <button class="btn btn-primary" type="submit"> Utwórz kategorie </button>
+                        <button class="btn btn-primary" type="submit"> Utwórz stronę </button>
                     </div>
                 </form>
             </div>

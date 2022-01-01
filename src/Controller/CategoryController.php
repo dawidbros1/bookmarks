@@ -36,11 +36,13 @@ class CategoryController extends Controller
                 $category = new Category($data);
                 $this->repository->create($category);
                 Session::set('success', 'Kategoria została utworzona');
+                $data = [];
             }
 
-            $this->redirect(self::$route->get('category.create'));
+            unset($data['user_id'], $data['private']);
+            $this->redirect(self::$route->get('category.create'), $data);
         } else {
-            $this->view->render('category/create');
+            $this->view->render('category/create', $this->request->getParams(['name', 'image']));
         }
     }
 
