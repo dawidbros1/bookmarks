@@ -83,8 +83,24 @@ class CategoryRepository extends Repository
 
     public function delete(Category $category)
     {
+        $this->deletePages($category->id);
         $sql = "DELETE FROM categories WHERE id = :id";
         $this->pdo->prepare($sql)->execute(['id' => $category->id]);
+    }
+
+    public function author(User $user, $id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM categories WHERE id=:id AND user_id=:user_id");
+        $stmt->execute(['id' => $id, 'user_id' => $user->id]);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (empty($data)) {return false;} else {return true;};
+    }
+
+    // Relations
+    public function deletePages($category_id)
+    {
+        $sql = "DELETE FROM pages WHERE category_id = :category_id";
+        $this->pdo->prepare($sql)->execute(['category_id' => $category_id]);
     }
 
     private function pages(Category $category)
@@ -101,13 +117,5 @@ class CategoryRepository extends Repository
         }
 
         return $pages;
-    }
-
-    public function author(User $user, $id)
-    {
-        $stmt = $this->pdo->prepare("SELECT * FROM categories WHERE id=:id AND user_id=:user_id");
-        $stmt->execute(['id' => $id, 'user_id' => $user->id]);
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (empty($data)) {return false;} else {return true;};
     }
 }

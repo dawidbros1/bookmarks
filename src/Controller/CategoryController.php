@@ -78,7 +78,7 @@ class CategoryController extends Controller
     public function deleteAction()
     {
         if ($this->request->isPost()) {
-            $category = $this->category(false);
+            $category = $this->category(true); // MUST BE TRUE
             $this->repository->delete($category);
             Session::set('success', 'Kategoria została usunięta');
         } else {
