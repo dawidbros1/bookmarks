@@ -26,7 +26,7 @@ class PageRepository extends Repository
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute($data);
         } catch (Throwable $e) {
-            throw new StorageException('Nie udało się dodać nowej kategorii', 400, $e);
+            throw new StorageException('Nie udało się dodać nowej zawartości', 400, $e);
         }
     }
 }
