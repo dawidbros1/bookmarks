@@ -2,7 +2,7 @@
 
 declare (strict_types = 1);
 
-use App\Error;
+use App\Component;
 use App\Helper\Session;
 
 ?>
@@ -20,23 +20,23 @@ use App\Helper\Session;
                         <input type="name" name="name" class="form-control" placeholder="Nazwa strony" value="<?=$params['name'] ?? ''?>">
                     </div>
 
-                    <?php Error::render('input', Session::getNextClear('error:name:between'))?>
+                    <?php Component::render('error', ['text' => Session::getNextClear('error:name:between')])?>
 
                     <div class="input-group mt-3">
                         <span class="input-group-text bg-primary"></span>
                         <input type="text" name="image" class="form-control" placeholder="Adres obrazka" value="<?=$params['image'] ?? ''?>">
                     </div>
 
-                    <?php Error::render('input', Session::getNextClear('error:image:max'))?>
-                    <?php Error::render('input', Session::getNextClear('error:image:require'))?>
+                    <?php Component::render('error', ['text' => Session::getNextClear('error:image:max')])?>
+                    <?php Component::render('error', ['text' => Session::getNextClear('error:image:require')])?>
 
                     <div class="input-group mt-3">
                         <span class="input-group-text bg-primary"></span>
                         <input type="text" name="link" class="form-control" placeholder="Link" value="<?=$params['link'] ?? ''?>">
                     </div>
 
-                    <?php Error::render('input', Session::getNextClear('error:link:max'))?>
-                    <?php Error::render('input', Session::getNextClear('error:link:require'))?>
+                    <?php Component::render('error', ['text' => Session::getNextClear('error:link:max')])?>
+                    <?php Component::render('error', ['text' => Session::getNextClear('error:link:require')])?>
 
                     <input type = "hidden" name = "category_id" value = "<?=$params['category_id']?>">
 
@@ -45,8 +45,8 @@ use App\Helper\Session;
                     </div>
                 </form>
 
-                <a href = "<?=$route->get('category.show') . "&id=" . $params['category_id']?>"> <button class="btn btn-info col-12 mt-1" type = "button" > Powrót </button> </a>
 
+                <?php Component::render('button.back', ['route' => $route->get('category.show') . "&id=" . $params['category_id']])?>
 
             </div>
         </div>

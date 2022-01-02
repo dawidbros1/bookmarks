@@ -2,7 +2,7 @@
 
 declare (strict_types = 1);
 
-use App\Error;
+use App\Component;
 use App\Helper\Session;
 
 $page = $params['page'];
@@ -22,23 +22,23 @@ $page = $params['page'];
                         <input type="name" name="name" class="form-control" placeholder="Nazwa strony" value="<?=$page->name?>">
                     </div>
 
-                    <?php Error::render('input', Session::getNextClear('error:name:between'))?>
+                    <?php Component::render('error', ['text' => Session::getNextClear('error:name:between')])?>
 
                     <div class="input-group mt-3">
                         <span class="input-group-text bg-primary"></span>
                         <input type="text" name="image" class="form-control" placeholder="Adres obrazka" value="<?=$page->image?>">
                     </div>
 
-                    <?php Error::render('input', Session::getNextClear('error:image:max'))?>
-                    <?php Error::render('input', Session::getNextClear('error:image:require'))?>
+                    <?php Component::render('error', ['text' => Session::getNextClear('error:image:max')])?>
+                    <?php Component::render('error', ['text' => Session::getNextClear('error:image:require')])?>
 
                     <div class="input-group mt-3">
                         <span class="input-group-text bg-primary"></span>
                         <input type="text" name="link" class="form-control" placeholder="Link" value="<?=$page->link?>">
                     </div>
 
-                    <?php Error::render('input', Session::getNextClear('error:link:max'))?>
-                    <?php Error::render('input', Session::getNextClear('error:link:require'))?>
+                    <?php Component::render('error', ['text' => Session::getNextClear('error:link:max')])?>
+                    <?php Component::render('error', ['text' => Session::getNextClear('error:link:require')])?>
 
                     <input type = "hidden" name = "id" value = "<?=$page->id?>">
 
@@ -53,7 +53,7 @@ $page = $params['page'];
                     </div>
                 </form>
 
-                <a href = "<?=$route->get('category.show') . "&id=" . $page->category_id?>"> <button class="btn btn-info col-12 mt-1" type = "button" > Powrót </button> </a>
+                <?php Component::render('button.back', ['route' => $route->get('category.show') . "&id=" . $page->category_id])?>
 
                 <div class="collapse delete">
                     <p class = "border-top text-center fw-bold"> Czy jesteś pewien, że chcesz usunąć wybraną stronę? </p>

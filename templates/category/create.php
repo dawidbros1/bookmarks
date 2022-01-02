@@ -2,7 +2,7 @@
 
 declare (strict_types = 1);
 
-use App\Error;
+use App\Component;
 use App\Helper\Session;
 
 ?>
@@ -20,15 +20,15 @@ use App\Helper\Session;
                         <input type="name" name="name" class="form-control" placeholder="Nazwa kategorii" value="<?=$params['name'] ?? ''?>">
                     </div>
 
-                    <?php Error::render('input', Session::getNextClear('error:name:between'))?>
+                    <?php Component::render('error', ['text' => Session::getNextClear('error:name:between')])?>
 
                     <div class="input-group mt-3">
                         <span class="input-group-text bg-primary"></span>
                         <input type="text" name="image" class="form-control" placeholder="Adres obrazka" value="<?=$params['image'] ?? ''?>">
                     </div>
 
-                    <?php Error::render('input', Session::getNextClear('error:image:max'))?>
-                    <?php Error::render('input', Session::getNextClear('error:image:require'))?>
+                    <?php Component::render('error', ['text' => Session::getNextClear('error:image:max')])?>
+                    <?php Component::render('error', ['text' => Session::getNextClear('error:image:require')])?>
 
                     <div class="form-check mt-2 border-top">
                         <input class="form-check-input" type="checkbox" id="private" name = "private">
@@ -40,7 +40,8 @@ use App\Helper\Session;
                     </div>
                 </form>
 
-                <a href = "<?=$route->get('category.list')?>"> <button class="btn btn-info col-12 mt-1" type = "button" > Moje kategorie </button> </a>
+                <?php Component::render('button.back', ['route' => $route->get('category.list'), 'text' => "Moje kategorie"])?>
+
 
             </div>
         </div>
