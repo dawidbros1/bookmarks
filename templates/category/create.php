@@ -39,6 +39,9 @@ use App\Helper\Session;
                         <button class="btn btn-primary" type="submit"> Utwórz kategorie </button>
                     </div>
                 </form>
+
+                <a href = "<?=$route->get('category.list')?>"> <button class="btn btn-info col-12 mt-1" type = "button" > Moje kategorie </button> </a>
+
             </div>
         </div>
     </div>

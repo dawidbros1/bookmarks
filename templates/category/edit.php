@@ -45,10 +45,12 @@ $category = $params['category'];
                         </div>
 
                         <div class="d-grid offset-1 col-2 mt-3">
-                            <button id = "delete" class="btn btn-danger" type = "button" class="btn btn-danger" data-bs-toggle="collapse" data-bs-target=".delete" aria-expanded="false"> USUŃ </button>
+                            <button id = "delete" type = "button" class="btn btn-danger" data-bs-toggle="collapse" data-bs-target=".delete" aria-expanded="false"> USUŃ </button>
                         </div>
                     </div>
                 </form>
+
+                <a href = "<?=$route->get('category.list')?>"> <button class="btn btn-info col-12 mt-1" type = "button" > Powrót </button> </a>
 
                 <div class="collapse delete">
                     <p class = "border-top text-center fw-bold"> Czy jesteś pewien, że chcesz usunąć wybraną kategorię? </p>

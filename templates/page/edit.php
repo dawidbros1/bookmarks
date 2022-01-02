@@ -53,6 +53,8 @@ $page = $params['page'];
                     </div>
                 </form>
 
+                <a href = "<?=$route->get('category.show') . "&id=" . $page->category_id?>"> <button class="btn btn-info col-12 mt-1" type = "button" > Powrót </button> </a>
+
                 <div class="collapse delete">
                     <p class = "border-top text-center fw-bold"> Czy jesteś pewien, że chcesz usunąć wybraną stronę? </p>
 

@@ -34,7 +34,7 @@ class CategoryRepository extends Repository
 
     public function getAll(int $user_id)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM categories WHERE user_id=:user_id");
+        $stmt = $this->pdo->prepare("SELECT * FROM categories WHERE user_id=:user_id ORDER BY name ASC");
         $stmt->execute(['user_id' => $user_id]);
 
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -106,7 +106,7 @@ class CategoryRepository extends Repository
     private function pages(Category $category)
     {
         $pages = [];
-        $stmt = $this->pdo->prepare("SELECT * FROM pages WHERE category_id=:category_id");
+        $stmt = $this->pdo->prepare("SELECT * FROM pages WHERE category_id=:category_id ORDER BY name ASC");
         $stmt->execute(['category_id' => $category->id]);
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

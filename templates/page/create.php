@@ -44,6 +44,10 @@ use App\Helper\Session;
                         <button class="btn btn-primary" type="submit"> Utwórz stronę </button>
                     </div>
                 </form>
+
+                <a href = "<?=$route->get('category.show') . "&id=" . $params['category_id']?>"> <button class="btn btn-info col-12 mt-1" type = "button" > Powrót </button> </a>
+
+
             </div>
         </div>
     </div>
