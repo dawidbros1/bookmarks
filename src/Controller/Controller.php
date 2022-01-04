@@ -151,4 +151,8 @@ abstract class Controller extends Validator
         $file['name'] = $name . '.' . $type;
         return $file;
     }
+
+    protected function url(){
+        return $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+    }
 }

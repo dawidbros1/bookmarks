@@ -17,7 +17,11 @@ class CategoryController extends Controller
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        $this->requireLogin();
+
+        if ($this->request->getParam('action') != "publicShow") {
+            $this->requireLogin();
+        }
+
         $this->repository = new CategoryRepository();
         $this->rules = new CategoryRules();
     }
@@ -50,7 +54,7 @@ class CategoryController extends Controller
     {
         View::set(['title' => "Moje kategorie", 'style' => 'item']);
         $categories = $this->repository->getAll($this->user->id);
-        $this->view->render('category/list', ['categories' => $categories]);
+        $this->view->render('category/list', ['categories' => $categories, 'url' => $this->url()]);
     }
 
     public function editAction()
@@ -92,7 +96,23 @@ class CategoryController extends Controller
     {
         $category = $this->category();
         View::set(['title' => $category->name, 'style' => 'item']);
-        $this->view->render('category/show', ['category' => $category]);
+        $this->view->render('category/show', ['category' => $category, 'manage' => true]);
+    }
+
+    public function publicAction()
+    {
+        $id = (int) $this->request->param('id');
+
+        if ($category = $this->repository->get((int) $id, true)) {
+            if ($category->private == false) {
+                View::set(['title' => $category->name, 'style' => 'item']);
+                $this->view->render('category/show', ['category' => $category, 'manage' => false]);
+                exit();
+            }
+        }
+
+        Session::set('error', 'Brak uprawnień do tego zasobu');
+        $this->redirect(self::$route->get('category.list'));
     }
 
     // =====
@@ -100,12 +120,15 @@ class CategoryController extends Controller
     private function category(bool $pages = true)
     {
         $id = (int) $this->request->param('id');
+        $category = null;
 
         if (!$this->repository->author($this->user, $id)) {
             Session::set('error', 'Brak uprawnień do tego zasobu');
             $this->redirect(self::$route->get('category.list'));
         } else {
-            return $this->repository->get((int) $id, $pages);
+            $category = $this->repository->get((int) $id, $pages);
         }
+
+        return $category;
     }
 }

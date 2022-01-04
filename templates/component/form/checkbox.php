@@ -9,10 +9,9 @@
 }
 ?>
     >
-
     <?php if (array_key_exists('label', $params)): ?>
-        <label class="form-check-label" for="<?=$params['id']?>">
-            <?=$params['label'] ?? ""?>
+        <label class="form-check-label" for="<?=$params['id'] ?? ""?>">
+            <?=$params['label']?>
         </label>
     <?php endif?>
 </div>

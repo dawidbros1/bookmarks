@@ -18,3 +18,9 @@ function initDeleteButton() {
         button.innerHTML = values[index++ % 2];
     });
 }
+
+function copyToClipBoard(index) {
+    let copyText = document.getElementsByClassName("copy")[index];
+    copyText.select();
+    navigator.clipboard.writeText(copyText.value);
+}

@@ -1,5 +1,4 @@
 .item{
-    position: relative;
     padding: 4px 5px !important;
 }
 
@@ -18,13 +17,21 @@ img{
     height: 100%;
 }
 
-.settings{
-    width: 20px;
-    height: 20px;
+#settings{
+    right: 6px; 
+    bottom: 6px;
+}
 
+#copy{
+    right: 6px; 
+    top: 6px;
+}
+
+.icon{
+    width: 22px;
+    height: 22px;
+    padding: 1px;
     position: absolute;
-    right: 8px; 
-    bottom: 8px;
-
     cursor: pointer;
+    background-color: white;
 }

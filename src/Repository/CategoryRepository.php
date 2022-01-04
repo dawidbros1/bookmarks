@@ -47,7 +47,7 @@ class CategoryRepository extends Repository
         return $categories;
     }
 
-    public function get(int $id, bool $pages)
+    public function get(?int $id, bool $pages)
     {
         $category = null;
         $stmt = $this->pdo->prepare("SELECT * FROM categories WHERE id=:id");
@@ -58,7 +58,7 @@ class CategoryRepository extends Repository
             $category = new Category($data);
 
             if ($pages) {
-                $category->addPages($this->pages($category));
+                $category->pages = $this->pages($category);
             }
         }
 

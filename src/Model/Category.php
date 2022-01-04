@@ -24,9 +24,4 @@ class Category extends Model
         $this->private = $data['private'];
         $this->pages = [];
     }
-
-    public function addPages($pages)
-    {
-        $this->pages = $pages ?? [];
-    }
 }
