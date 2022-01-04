@@ -14,40 +14,20 @@ use App\Helper\Session;
                 <h3 class="text-primary">Dodawanie strony</h3>
             </div>
             <div class="p-4">
-                <form action="<?=$route->get('page.create')?>" method="post">
-                    <div class="input-group">
-                        <span class="input-group-text bg-primary"></span>
-                        <input type="name" name="name" class="form-control" placeholder="Nazwa strony" value="<?=$params['name'] ?? ''?>">
-                    </div>
+                <form action="<?=$route->get('page.create') . "&category_id=" . $params['category_id']?>" method="post">
+                    <?php Component::render('form.input', ['class' => "", 'type' => "text", 'name' => "name", "placeholder" => "Nazwa strony", 'value' => $params['name'] ?? '', 'prefix' => true])?>
+                    <?php Component::render('error', ['type' => "name", 'names' => ['between']])?>
 
-                    <?php Component::render('error', ['text' => Session::getNextClear('error:name:between')])?>
+                    <?php Component::render('form.input', ['class' => "mt-3", 'type' => "text", 'name' => "image", "placeholder" => "Adres obrazka", 'value' => $params['image'] ?? '', 'prefix' => true])?>
+                    <?php Component::render('error', ['type' => "image", 'names' => ['max', 'require']])?>
 
-                    <div class="input-group mt-3">
-                        <span class="input-group-text bg-primary"></span>
-                        <input type="text" name="image" class="form-control" placeholder="Adres obrazka" value="<?=$params['image'] ?? ''?>">
-                    </div>
+                    <?php Component::render('form.input', ['class' => "mt-3", 'type' => "text", 'name' => "link", "placeholder" => "Link do strony", 'value' => $params['link'] ?? '', 'prefix' => true])?>
+                    <?php Component::render('error', ['type' => "link", 'names' => ['max', 'require']])?>
 
-                    <?php Component::render('error', ['text' => Session::getNextClear('error:image:max')])?>
-                    <?php Component::render('error', ['text' => Session::getNextClear('error:image:require')])?>
-
-                    <div class="input-group mt-3">
-                        <span class="input-group-text bg-primary"></span>
-                        <input type="text" name="link" class="form-control" placeholder="Link" value="<?=$params['link'] ?? ''?>">
-                    </div>
-
-                    <?php Component::render('error', ['text' => Session::getNextClear('error:link:max')])?>
-                    <?php Component::render('error', ['text' => Session::getNextClear('error:link:require')])?>
-
-                    <input type = "hidden" name = "category_id" value = "<?=$params['category_id']?>">
-
-                    <div class="d-grid col-12 mx-auto mt-3">
-                        <button class="btn btn-primary" type="submit"> Utwórz stronę </button>
-                    </div>
+                    <?php Component::render('form.button', ['text' => "Utwórz stronę"])?>
                 </form>
 
-
-                <?php Component::render('button.back', ['route' => $route->get('category.show') . "&id=" . $params['category_id']])?>
-
+                <?php Component::render('button.back', ['action' => $route->get('category.show') . "&id=" . $params['category_id']])?>
             </div>
         </div>
     </div>

@@ -26,10 +26,7 @@ use App\Helper\Session;
                             <input type = "file" name = "avatar" class = "rounded-circle" id = "file">
                         </div>
 
-                        <?php Component::render('error', ['text' => Session::getNextClear('error:file:empty')])?>
-                        <?php Component::render('error', ['text' => Session::getNextClear('error:file:notImage')])?>
-                        <?php Component::render('error', ['text' => Session::getNextClear('error:file:maxSize')])?>
-                        <?php Component::render('error', ['text' => Session::getNextClear('error:file:types')])?>
+                        <?php Component::render('error', ['type' => "file", 'names' => ['empty', 'notImage', 'maxSize', 'types']])?>
 
                         <div>
                             <div class="fw-bold"> <?=$user->username?></div>
@@ -37,11 +34,9 @@ use App\Helper\Session;
                             <div class = "border-top w-100 mb-2"></div>
                         </div>
 
-                        <div class="text-center">
-                            <button class="btn btn-primary profile-button w-100" type="submit">Zmień awatar</button>
-                        </div>
-
                         <input type = "hidden" name = "update" value = "avatar">
+
+                        <?php Component::render('form.button', ['text' => "Zmień awatar", 'class' => "profile-button"])?>
                     </form>
                 </div>
              <!-- END -->
@@ -68,20 +63,11 @@ use App\Helper\Session;
                     </div>
 
                     <form action="<?=$route->get('user.update')?>" method="post">
-                        <div class="row mt-1">
-                            <div class="col-md-12"><label class="labels">Nazwa użytkownika</label><input type="text"
-                                    class="form-control" placeholder="Nazwa użytkownika" value="<?=$user->username?>"
-                                    name="username">
-                            </div>
-                        </div>
-
-                        <?php Component::render('error', ['text' => Session::getNextClear('error:username:between')])?>
-                        <?php Component::render('error', ['text' => Session::getNextClear('error:username:specialCharacters')])?>
-
-                        <div class="mt-2 text-center"><button class="btn btn-primary profile-button w-100"
-                                type="submit">Aktualizuj nazwę </button></div>
+                        <?php Component::render('form.input', ['class' => "mt-1", 'type' => "text", 'name' => "username", "placeholder" => "Nazwa użytkownika", 'label' => "Nazwa użytkownika", 'value' => $user->username])?>
+                        <?php Component::render('error', ['type' => "username", 'names' => ['between', 'specialCharacters']])?>
 
                         <input type = "hidden" name = "update" value = "username">
+                        <?php Component::render('form.button', ['text' => "Zmień nazwę użytkownika", 'class' => "profile-button"])?>
                     </form>
                 </div>
 
@@ -93,32 +79,17 @@ use App\Helper\Session;
                             <h6 class="text-center w-100">Zmień hasło</h6>
                         </div>
 
-                        <div class="row mt-3">
-                            <div class="col-md-12"><label class="labels">Aktualne hasło</label><input type="password"
-                                    class="form-control" placeholder="Aktualne hasło" name="current_password"></div>
-                        </div>
+                        <?php Component::render('form.input', ['class' => "mt-3", 'type' => "password", 'name' => "current_password", "placeholder" => "Aktualne hasło", 'label' => "Aktualne hasło "])?>
+                        <?php Component::render('error', ['type' => "current_password", 'names' => ['same']])?>
 
-                        <?php Component::render('error', ['text' => Session::getNextClear('error:password:current')])?>
+                        <?php Component::render('form.input', ['class' => "mt-3", 'type' => "password", 'name' => "password", "placeholder" => "Nowe hasło", 'label' => 'Nowe hasło '])?>
+                        <?php Component::render('error', ['type' => "password", 'names' => ['between']])?>
 
-                        <div class="row mt-3">
-                            <div class="col-md-12"><label class="labels">Nowe hasło</label><input type="password"
-                                    class="form-control" placeholder="Nowe hasło" name="password">
-                            </div>
-                        </div>
+                        <?php Component::render('form.input', ['class' => "mt-3", 'type' => "password", 'name' => "repeat_password", "placeholder" => "Powtórz nowe hasło", 'label' => 'Powtórz nowe hasło '])?>
+                        <?php Component::render('error', ['type' => "repeat_password", 'names' => ['same']])?>
 
-                        <?php Component::render('error', ['text' => Session::getNextClear('error:password:between')])?>
-
-                        <div class="row mt-3">
-                            <div class="col-md-12"><label class="labels">Powtórz nowe hasło</label><input
-                                    type="password" class="form-control" placeholder="Powtórz now hasło"
-                                    name="repeat_password"></div>
-                        </div>
-
-                        <?php Component::render('error', ['text' => Session::getNextClear('error:password:same')])?>
-
-                        <div class="mt-2 text-center"><button class="btn btn-primary profile-button w-100"
-                                type="submit">Aktualizuj hasło</button></div>
                         <input type = "hidden" name = "update" value = "password">
+                        <?php Component::render('form.button', ['text' => "Aktualizuj hasło", 'class' => "profile-button"])?>
                     </form>
                 </div>
             </div>

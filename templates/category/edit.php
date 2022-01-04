@@ -16,50 +16,23 @@ $category = $params['category'];
                 <h3 class="text-primary">Edycja kategorii</h3>
             </div>
             <div class="p-4">
-                <form action="<?=$route->get('category.edit')?>" method="post">
-                    <div class="input-group">
-                        <span class="input-group-text bg-primary"></span>
-                        <input type="name" name="name" class="form-control" placeholder="Nazwa kategorii" value="<?=$category->name?>">
-                    </div>
+                <form action="<?=$route->get('category.edit') . "&id=" . $category->id?>" method="post">
+                    <?php Component::render('form.input', ['class' => "", 'type' => "text", 'name' => "name", "placeholder" => "Nazwa kategorii", 'value' => $category->name, 'prefix' => true])?>
+                    <?php Component::render('error', ['type' => "name", 'names' => ['between']])?>
 
-                    <?php Component::render('error', ['text' => Session::getNextClear('error:name:between')])?>
+                    <?php Component::render('form.input', ['class' => "mt-3", 'type' => "text", 'name' => "image", "placeholder" => "Adres obrazka", 'value' => $category->image, 'prefix' => true])?>
+                    <?php Component::render('error', ['type' => "image", 'names' => ['max', 'require']])?>
 
-                    <div class="input-group mt-3">
-                        <span class="input-group-text bg-primary"></span>
-                        <input type="text" name="image" class="form-control" placeholder="Adres obrazka" value="<?=$category->image?>">
-                    </div>
-
-                    <?php Component::render('error', ['text' => Session::getNextClear('error:image:max')])?>
-                    <?php Component::render('error', ['text' => Session::getNextClear('error:image:require')])?>
-
-                    <div class="form-check mt-2 border-top">
-                        <input class="form-check-input" type="checkbox" id="private" name = "private" <?php if ($category->private) {echo "checked";}?>>
-                        <label class="form-check-label" for="private"> Kategoria prywatna </label>
-                    </div>
-
-                    <input type = "hidden" name = "id" value = "<?=$category->id?>">
+                    <?php Component::render('form.checkbox', ['class' => "form-check mt-2 border-top", 'name' => "private", "label" => "Kategoria prywatna", 'checked' => $category->private])?>
 
                     <div class="d-flex">
-                        <div class="d-grid col-9 mt-3">
-                            <button class="btn btn-primary" type="submit"> Edytuj kategorie </button>
-                        </div>
-
-                        <div class="d-grid offset-1 col-2 mt-3">
-                            <button id = "delete" type = "button" class="btn btn-danger" data-bs-toggle="collapse" data-bs-target=".delete" aria-expanded="false"> USUŃ </button>
-                        </div>
+                        <?php Component::render('form.button', ['class' => "col-9 mt-3", 'text' => "Edytuj kategorie"])?>
+                        <?php Component::render('button.delete')?>
                     </div>
                 </form>
 
-                <?php Component::render('button.back', ['route' => $route->get('category.list'), 'text' => "Moje kategorie"])?>
-
-                <div class="collapse delete">
-                    <p class = "border-top text-center fw-bold"> Czy jesteś pewien, że chcesz usunąć wybraną kategorię? </p>
-
-                    <form action = "<?=$route->get('category.delete')?>" method = "POST">
-                        <input type = "hidden" name = "id" value = "<?=$category->id?>">
-                        <button class="btn btn-danger col-12" type = "submit"> Tak </button>
-                    </form>
-                </div>
+                <?php Component::render('form.delete', ['action' => $route->get('category.delete') . "&id=" . $category->id])?>
+                <?php Component::render('button.back', ['action' => $route->get('category.list'), 'text' => "Moje kategorie"])?>
             </div>
         </div>
     </div>

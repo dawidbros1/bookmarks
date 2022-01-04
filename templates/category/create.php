@@ -15,34 +15,18 @@ use App\Helper\Session;
             </div>
             <div class="p-4">
                 <form action="<?=$route->get('category.create')?>" method="post">
-                    <div class="input-group">
-                        <span class="input-group-text bg-primary"></span>
-                        <input type="name" name="name" class="form-control" placeholder="Nazwa kategorii" value="<?=$params['name'] ?? ''?>">
-                    </div>
+                    <?php Component::render('form.input', ['class' => "", 'type' => "text", 'name' => "name", "placeholder" => "Nazwa kategorii", 'value' => $params['name'] ?? '', 'prefix' => true])?>
+                    <?php Component::render('error', ['type' => "name", 'names' => ['between']])?>
 
-                    <?php Component::render('error', ['text' => Session::getNextClear('error:name:between')])?>
+                    <?php Component::render('form.input', ['class' => "mt-3", 'type' => "text", 'name' => "image", "placeholder" => "Adres obrazka", 'value' => $params['image'] ?? '', 'prefix' => true])?>
+                    <?php Component::render('error', ['type' => "image", 'names' => ['max', 'require']])?>
 
-                    <div class="input-group mt-3">
-                        <span class="input-group-text bg-primary"></span>
-                        <input type="text" name="image" class="form-control" placeholder="Adres obrazka" value="<?=$params['image'] ?? ''?>">
-                    </div>
+                    <?php Component::render('form.checkbox', ['class' => "form-check mt-2 border-top", 'name' => "private", "label" => "Kategoria prywatna"])?>
 
-                    <?php Component::render('error', ['text' => Session::getNextClear('error:image:max')])?>
-                    <?php Component::render('error', ['text' => Session::getNextClear('error:image:require')])?>
-
-                    <div class="form-check mt-2 border-top">
-                        <input class="form-check-input" type="checkbox" id="private" name = "private">
-                        <label class="form-check-label" for="private"> Kategoria prywatna </label>
-                    </div>
-
-                    <div class="d-grid col-12 mx-auto mt-3">
-                        <button class="btn btn-primary" type="submit"> Utwórz kategorie </button>
-                    </div>
+                    <?php Component::render('form.button', ['text' => "Utwórz kategorie"])?>
                 </form>
 
-                <?php Component::render('button.back', ['route' => $route->get('category.list'), 'text' => "Moje kategorie"])?>
-
-
+                <?php Component::render('button.back', ['action' => $route->get('category.list'), 'text' => "Moje kategorie"])?>
             </div>
         </div>
     </div>

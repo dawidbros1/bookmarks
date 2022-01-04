@@ -16,53 +16,24 @@ $page = $params['page'];
                 <h3 class="text-primary">Edycja strony</h3>
             </div>
             <div class="p-4">
-                <form action="<?=$route->get('page.edit')?>" method="post">
-                    <div class="input-group">
-                        <span class="input-group-text bg-primary"></span>
-                        <input type="name" name="name" class="form-control" placeholder="Nazwa strony" value="<?=$page->name?>">
-                    </div>
+                <form action="<?=$route->get('page.edit') . "&id=" . $page->id?>" method="post">
+                <?php Component::render('form.input', ['class' => "", 'type' => "text", 'name' => "name", "placeholder" => "Nazwa strony", 'value' => $page->name, 'prefix' => true])?>
+                    <?php Component::render('error', ['type' => "name", 'names' => ['between']])?>
 
-                    <?php Component::render('error', ['text' => Session::getNextClear('error:name:between')])?>
+                    <?php Component::render('form.input', ['class' => "mt-3", 'type' => "text", 'name' => "image", "placeholder" => "Adres obrazka", 'value' => $page->image, 'prefix' => true])?>
+                    <?php Component::render('error', ['type' => "image", 'names' => ['max', 'require']])?>
 
-                    <div class="input-group mt-3">
-                        <span class="input-group-text bg-primary"></span>
-                        <input type="text" name="image" class="form-control" placeholder="Adres obrazka" value="<?=$page->image?>">
-                    </div>
-
-                    <?php Component::render('error', ['text' => Session::getNextClear('error:image:max')])?>
-                    <?php Component::render('error', ['text' => Session::getNextClear('error:image:require')])?>
-
-                    <div class="input-group mt-3">
-                        <span class="input-group-text bg-primary"></span>
-                        <input type="text" name="link" class="form-control" placeholder="Link" value="<?=$page->link?>">
-                    </div>
-
-                    <?php Component::render('error', ['text' => Session::getNextClear('error:link:max')])?>
-                    <?php Component::render('error', ['text' => Session::getNextClear('error:link:require')])?>
-
-                    <input type = "hidden" name = "id" value = "<?=$page->id?>">
+                    <?php Component::render('form.input', ['class' => "mt-3", 'type' => "text", 'name' => "link", "placeholder" => "Link do strony", 'value' => $page->link, 'prefix' => true])?>
+                    <?php Component::render('error', ['type' => "link", 'names' => ['max', 'require']])?>
 
                     <div class="d-flex">
-                        <div class="d-grid col-9 mt-3">
-                            <button class="btn btn-primary" type="submit"> Edytuj stronę </button>
-                        </div>
-
-                        <div class="d-grid offset-1 col-2 mt-3">
-                            <button id = "delete" class="btn btn-danger" type = "button" class="btn btn-danger" data-bs-toggle="collapse" data-bs-target=".delete" aria-expanded="false"> USUŃ </button>
-                        </div>
+                        <?php Component::render('form.button', ['class' => "col-9 mt-3", 'text' => "Edytuj strone"])?>
+                        <?php Component::render('button.delete')?>
                     </div>
                 </form>
 
-                <?php Component::render('button.back', ['route' => $route->get('category.show') . "&id=" . $page->category_id])?>
-
-                <div class="collapse delete">
-                    <p class = "border-top text-center fw-bold"> Czy jesteś pewien, że chcesz usunąć wybraną stronę? </p>
-
-                    <form action = "<?=$route->get('page.delete')?>" method = "POST">
-                        <input type = "hidden" name = "id" value = "<?=$page->id?>">
-                        <button class="btn btn-danger col-12" type = "submit"> Tak </button>
-                    </form>
-                </div>
+                <?php Component::render('form.delete', ['action' => $route->get('page.delete') . "&id=" . $page->id])?>
+                <?php Component::render('button.back', ['action' => $route->get('category.show') . "&id=" . $page->category_id])?>
             </div>
         </div>
     </div>
