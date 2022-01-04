@@ -27,7 +27,7 @@ $page = $params['page'];
                     <?php Component::render('error', ['type' => "link", 'names' => ['max', 'require']])?>
 
                     <div class="d-flex">
-                        <?php Component::render('form.button', ['class' => "col-9 mt-3", 'text' => "Edytuj strone"])?>
+                        <?php Component::render('form.button', ['div' => "col-9 mt-3", 'text' => "Edytuj stronę"])?>
                         <?php Component::render('button.delete')?>
                     </div>
                 </form>

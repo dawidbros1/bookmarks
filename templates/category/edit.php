@@ -26,7 +26,7 @@ $category = $params['category'];
                     <?php Component::render('form.checkbox', ['class' => "form-check mt-2 border-top", 'name' => "private", "label" => "Kategoria prywatna", 'checked' => $category->private])?>
 
                     <div class="d-flex">
-                        <?php Component::render('form.button', ['class' => "col-9 mt-3", 'text' => "Edytuj kategorie"])?>
+                        <?php Component::render('form.button', ['div' => "col-9 mt-3", 'text' => "Edytuj kategorie"])?>
                         <?php Component::render('button.delete')?>
                     </div>
                 </form>
