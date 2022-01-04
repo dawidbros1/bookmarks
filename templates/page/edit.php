@@ -16,7 +16,7 @@ $page = $params['page'];
                 <h3 class="text-primary">Edycja strony</h3>
             </div>
             <div class="p-4">
-                <form action="<?=$route->get('page.edit') . "&id=" . $page->id?>" method="post">
+                <form action="<?=$route->get('page.edit')?>" method="post">
                 <?php Component::render('form.input', ['class' => "", 'type' => "text", 'name' => "name", "placeholder" => "Nazwa strony", 'value' => $page->name, 'prefix' => true])?>
                     <?php Component::render('error', ['type' => "name", 'names' => ['between']])?>
 
@@ -26,13 +26,15 @@ $page = $params['page'];
                     <?php Component::render('form.input', ['class' => "mt-3", 'type' => "text", 'name' => "link", "placeholder" => "Link do strony", 'value' => $page->link, 'prefix' => true])?>
                     <?php Component::render('error', ['type' => "link", 'names' => ['max', 'require']])?>
 
+                    <input type = "hidden" name = "id" value = "<?=$page->id?>">
+
                     <div class="d-flex">
                         <?php Component::render('form.button', ['div' => "col-9 mt-3", 'text' => "Edytuj stronę"])?>
                         <?php Component::render('button.delete')?>
                     </div>
                 </form>
 
-                <?php Component::render('form.delete', ['action' => $route->get('page.delete') . "&id=" . $page->id])?>
+                <?php Component::render('form.delete', ['action' => $route->get('page.delete'), "id" => $page->id])?>
                 <?php Component::render('button.back', ['action' => $route->get('category.show') . "&id=" . $page->category_id])?>
             </div>
         </div>
