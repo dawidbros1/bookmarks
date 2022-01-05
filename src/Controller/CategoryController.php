@@ -18,7 +18,7 @@ class CategoryController extends Controller
     {
         parent::__construct($request);
 
-        if ($this->request->getParam('action') != "publicShow") {
+        if ($this->request->getParam('action') != "public") {
             $this->requireLogin();
         }
 
@@ -54,7 +54,7 @@ class CategoryController extends Controller
     {
         View::set(['title' => "Moje kategorie", 'style' => 'item']);
         $categories = $this->repository->getAll($this->user->id);
-        $this->view->render('category/list', ['categories' => $categories, 'url' => $this->url()]);
+        $this->view->render('category/list', ['categories' => $categories, 'url' => $this->request->url()]);
     }
 
     public function editAction()
@@ -112,7 +112,7 @@ class CategoryController extends Controller
         }
 
         Session::set('error', 'Brak uprawnień do tego zasobu');
-        $this->redirect(self::$route->get('category.list'));
+        $this->redirect(self::$route->get('home'));
     }
 
     // =====
