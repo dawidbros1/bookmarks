@@ -26,12 +26,12 @@ $url = $params['url'] ?? null; // Copy public lunk to category
         <?php endif;?>
 
         <?php if ($create == false && $manage == true): ?>
-            <a href = "<?=$route->get($model . '.edit') . "&id=$item->id"?>"><img class = "icon settings" src = "public/images/settings.png"></img></a>
+            <a href = "<?=$route->get($model . '.edit') . "&id=$item->id"?>"><img class = "icon icon-settings" src = "public/images/settings.png"></img></a>
         <?php endif;?>
 
         <?php if ($model == "category"): ?>
             <a href = "<?=$route->get('category.show') . "&id=" . $item->id?>"><img class = "image" src = "<?=$item->image?>"></img></a>
-            <img src="public/images/copy.png" alt="#" class = "icon copy <?=$item->private ? "d-none" : ""?>" title="Skopiuj link do udostępnienia" onclick="copyToClipBoard(<?=$index?>)">
+            <img src="public/images/copy.png" alt="#" class = "icon icon-copy <?=$item->private ? "d-none" : ""?>" title="Skopiuj link do udostępnienia" onclick="copyToClipBoard(<?=$index?>)">
             <input type="hidden" class="copy" value="<?=$url . $route->get('category.public') . "&id=" . $item->id?>">
         <?php endif;?>
     </div>

@@ -17,12 +17,12 @@ img{
     height: 100%;
 }
 
-.settings{
+.icon-settings{
     right: 6px; 
     bottom: 6px;
 }
 
-.copy{
+.icon-copy{
     right: 6px; 
     top: 6px;
 }
