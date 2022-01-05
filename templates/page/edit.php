@@ -33,7 +33,7 @@ $categories = $params['categories'];
                     <input type = "hidden" name = "id" value = "<?=$page->id?>">
 
                     <div class="d-flex">
-                        <?php Component::render('form.button', ['div' => "col-9", 'text' => "Edytuj stronę"])?>
+                        <?php Component::render('form.button', ['div' => "col-9", 'text' => "Zapisz zmiany"])?>
                         <?php Component::render('button.delete')?>
                     </div>
                 </form>

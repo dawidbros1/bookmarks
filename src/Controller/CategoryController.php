@@ -70,7 +70,7 @@ class CategoryController extends Controller
             if ($this->validate($data, $this->rules)) {
                 $category->update($data);
                 $this->repository->update($category);
-                Session::set('success', 'Kategoria została zaktualizowana');
+                Session::set('success', 'Dane zostały zaktualizowane');
             }
 
             $this->redirect(self::$route->get('category.edit') . "&id=" . $category->id);

@@ -70,7 +70,7 @@ class PageController extends Controller
             if ($this->validate($data, $this->rules) && $author) {
                 $page->update($data);
                 $this->repository->update($page);
-                Session::set('success', 'Strona została zaktualizowana');
+                Session::set('success', 'Dane zostały zaktualizowane');
             }
 
             $this->redirect(self::$route->get('page.edit') . "&id=" . $page->id);

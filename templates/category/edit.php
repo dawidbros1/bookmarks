@@ -28,7 +28,7 @@ $category = $params['category'];
                     <input type = "hidden" name = "id" value = "<?=$category->id?>">
 
                     <div class="d-flex">
-                        <?php Component::render('form.button', ['div' => "col-9", 'text' => "Edytuj kategorie"])?>
+                        <?php Component::render('form.button', ['div' => "col-9", 'text' => "Zapisz zmiany"])?>
                         <?php Component::render('button.delete')?>
                     </div>
                 </form>
