@@ -4,6 +4,7 @@ declare (strict_types = 1);
 
 namespace App\Repository;
 
+use App\Model\Category;
 use App\Model\Page;
 use App\Repository\Repository;
 use PDO;
@@ -52,9 +53,10 @@ class PageRepository extends Repository
             'name' => $page->name,
             'image' => $page->image,
             'link' => $page->link,
+            'category_id' => $page->category_id,
         ];
 
-        $sql = "UPDATE pages SET name=:name, image=:image, link=:link WHERE id=:id";
+        $sql = "UPDATE pages SET name=:name, image=:image, link=:link, category_id=:category_id WHERE id=:id";
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->execute($data);
@@ -64,5 +66,20 @@ class PageRepository extends Repository
     {
         $sql = "DELETE FROM pages WHERE id = :id";
         $this->pdo->prepare($sql)->execute(['id' => $page->id]);
+    }
+
+    public function categories(int $user_id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM categories WHERE user_id=:user_id ORDER BY name ASC");
+        $stmt->execute(['user_id' => $user_id]);
+
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $categories = [];
+
+        foreach ($data as $item) {
+            $categories[] = new Category($item);
+        }
+
+        return $categories;
     }
 }

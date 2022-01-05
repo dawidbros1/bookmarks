@@ -1,6 +1,6 @@
 <?php $array = ['name', 'id']?>
 
-<div class="form-check <?=$params['class'] ?? ""?>">
+<div class="form-check mt-2 <?=$params['class'] ?? ""?>">
     <input class="form-check-input" type="checkbox"
         id = "<?=$params['id'] ?? ""?>"
         name = "<?=$params['name'] ?? ""?>"

@@ -6,6 +6,7 @@ use App\Component;
 use App\Helper\Session;
 
 $page = $params['page'];
+$categories = $params['categories'];
 
 ?>
 
@@ -17,19 +18,22 @@ $page = $params['page'];
             </div>
             <div class="p-4">
                 <form action="<?=$route->get('page.edit')?>" method="post">
-                <?php Component::render('form.input', ['class' => "", 'type' => "text", 'name' => "name", "placeholder" => "Nazwa strony", 'value' => $page->name, 'prefix' => true])?>
+                    <?php Component::render('form.input', ['mt' => 'mt-0', 'type' => "text", 'name' => "name", "description" => "Nazwa strony", 'value' => $page->name, 'prefix' => true])?>
                     <?php Component::render('error', ['type' => "name", 'names' => ['between']])?>
 
-                    <?php Component::render('form.input', ['class' => "mt-3", 'type' => "text", 'name' => "image", "placeholder" => "Adres obrazka", 'value' => $page->image, 'prefix' => true])?>
+                    <?php Component::render('form.input', ['type' => "text", 'name' => "image", "description" => "Adres obrazka", 'value' => $page->image, 'prefix' => true])?>
                     <?php Component::render('error', ['type' => "image", 'names' => ['max', 'require']])?>
 
-                    <?php Component::render('form.input', ['class' => "mt-3", 'type' => "text", 'name' => "link", "placeholder" => "Link do strony", 'value' => $page->link, 'prefix' => true])?>
+                    <?php Component::render('form.input', ['type' => "text", 'name' => "link", "description" => "Link do strony", 'value' => $page->link, 'prefix' => true])?>
                     <?php Component::render('error', ['type' => "link", 'names' => ['max', 'require']])?>
+
+                    <?php Component::render('form.select', ['name' => "category_id", "label" => "Wybierz kategorię", 'search' => $page->category_id, 'options' => $categories, 'prefix' => true])?>
+                    <?php Component::render('error', ['type' => "category_id", 'names' => ['author']])?>
 
                     <input type = "hidden" name = "id" value = "<?=$page->id?>">
 
                     <div class="d-flex">
-                        <?php Component::render('form.button', ['div' => "col-9 mt-3", 'text' => "Edytuj stronę"])?>
+                        <?php Component::render('form.button', ['div' => "col-9", 'text' => "Edytuj stronę"])?>
                         <?php Component::render('button.delete')?>
                     </div>
                 </form>

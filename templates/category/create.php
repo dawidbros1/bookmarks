@@ -15,13 +15,13 @@ use App\Helper\Session;
             </div>
             <div class="p-4">
                 <form action="<?=$route->get('category.create')?>" method="post">
-                    <?php Component::render('form.input', ['class' => "", 'type' => "text", 'name' => "name", "placeholder" => "Nazwa kategorii", 'value' => $params['name'] ?? '', 'prefix' => true])?>
+                    <?php Component::render('form.input', ['mt' => "mt-0", 'type' => "text", 'name' => "name", "description" => "Nazwa kategorii", 'value' => $params['name'] ?? '', 'prefix' => true])?>
                     <?php Component::render('error', ['type' => "name", 'names' => ['between']])?>
 
-                    <?php Component::render('form.input', ['class' => "mt-3", 'type' => "text", 'name' => "image", "placeholder" => "Adres obrazka", 'value' => $params['image'] ?? '', 'prefix' => true])?>
+                    <?php Component::render('form.input', ['type' => "text", 'name' => "image", "description" => "Adres obrazka", 'value' => $params['image'] ?? '', 'prefix' => true])?>
                     <?php Component::render('error', ['type' => "image", 'names' => ['max', 'require']])?>
 
-                    <?php Component::render('form.checkbox', ['class' => "form-check mt-2 border-top", 'name' => "private", "label" => "Kategoria prywatna"])?>
+                    <?php Component::render('form.checkbox', ['class' => "form-check border-top", 'name' => "private", "label" => "Kategoria prywatna"])?>
 
                     <?php Component::render('form.button', ['text' => "Utwórz kategorie"])?>
                 </form>

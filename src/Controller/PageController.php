@@ -58,12 +58,16 @@ class PageController extends Controller
     {
         View::set(['title' => "Edycja strony"]);
         $page = $this->page();
-        $names = ['name', 'image', 'link', 'id'];
+        $names = ['name', 'image', 'link', 'id', 'category_id'];
 
         if ($this->request->isPost() && $this->request->hasPostNames($names)) {
             $data = $this->request->postParams($names);
 
-            if ($this->validate($data, $this->rules)) {
+            if (!$author = $this->categoryRepository->author($this->user, $data['category_id'])) {
+                Session::set('error:category_id:author', 'Nie jesteś autorem wybranej kategorii');
+            }
+
+            if ($this->validate($data, $this->rules) && $author) {
                 $page->update($data);
                 $this->repository->update($page);
                 Session::set('success', 'Strona została zaktualizowana');
@@ -71,7 +75,7 @@ class PageController extends Controller
 
             $this->redirect(self::$route->get('page.edit') . "&id=" . $page->id);
         } else {
-            $this->view->render("page/edit", ['page' => $page]);
+            $this->view->render("page/edit", ['page' => $page, 'categories' => $this->repository->categories($this->user->id)]);
         }
     }
 

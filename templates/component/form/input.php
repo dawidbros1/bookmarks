@@ -4,9 +4,11 @@ declare (strict_types = 1);
 
 use App\Helper\Session;
 
+$mt = $params['mt'] ?? "mt-2";
+
 ?>
 
-<div class="input-group <?=$params['class'] ?? ''?>">
+<div class="input-group <?=$mt?> <?=$params['class'] ?? ''?>">
     <?php if (array_key_exists('label', $params)): ?>
         <div class = "col-12"><label class="labels"><?=$params['label']?></label></div>
     <?php endif;?>
@@ -24,5 +26,4 @@ use App\Helper\Session;
             <?php endif;?>
         <?php endforeach;?>
     >
-
 </div>
