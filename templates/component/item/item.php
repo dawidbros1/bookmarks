@@ -8,7 +8,7 @@ $route = $params['route'];
 
 $manage = $params['manage'] ?? true; // Public data and Create page can't have settings icon
 $create = $params['create'] ?? false; // Show create page item
-$index = $params['index'] ?? null; // Category class counter
+$index = $params['index'] ?? null; // Category class [ copy ] counter
 $url = $params['url'] ?? null; // Copy public lunk to category
 
 ?>
