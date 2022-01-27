@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -19,8 +19,8 @@ use App\View;
 
 abstract class Controller extends Validator
 {
-    protected static $config = [];
-    protected static $route = [];
+    protected static $config;
+    protected static $route;
 
     protected $userRepository;
     protected $hashMethod;

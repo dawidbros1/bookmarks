@@ -36,4 +36,3 @@ $url = $params['url'] ?? null; // Copy public lunk to category
         <?php endif;?>
     </div>
 </div>
-
