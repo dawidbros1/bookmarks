@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -64,7 +64,7 @@ class AuthController extends Controller
             if ($id = $this->repository->login($data['email'], $this->hash($data['password']))) {
                 Session::set('user:id', $id);
                 $lastPage = Session::getNextClear('lastPage');
-                $this->redirect($lastPage ? "?" . $lastPage : self::$route->get('home'));
+                $this->redirect($lastPage ? "?" . $lastPage : self::$route->get('category.list'));
             } else {
                 if (in_array($data["email"], $this->repository->getEmails())) {
                     Session::set("error:password:incorrect", "Wprowadzone hasło jest nieprawidłowe");
@@ -106,7 +106,6 @@ class AuthController extends Controller
             }
 
             $this->redirect(self::$route->get('auth.forgotPassword'));
-
         } else {
             $this->view->render('auth/forgotPassword');
         }

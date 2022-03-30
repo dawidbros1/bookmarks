@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -12,7 +12,7 @@ class GeneralController extends Controller
 {
     public function homeAction()
     {
-        View::set(['title' => "Strona główna"]);
+        View::set(['title' => "Strona główna", 'style' => "home"]);
         $this->view->render('general/home');
     }
 
