@@ -19,19 +19,19 @@ $url = $params['url'] ?? null; // Copy public link to category
     <div class="position-relative">
         <?php if ($model == "page") : ?>
             <?php if ($create == true) : ?>
-                <a href="<?= $route->get('page.create') . "&category_id=" . $item->id ?>"><img class="image bg-light p-3" src="public/images/plus.png"></img></a>
+                <a href="<?= $route->get('page.create') . "&category_id=" . $item->id ?>"><img class="image bg-light p-3" src="public/images/plus.png" alt="create-page-image"></img></a>
             <?php else : ?>
-                <a href="<?= $item->link ?>" target="_blank"><img class="image bg-light" src="<?= $item->image ?>"></img></a>
+                <a href="<?= $item->link ?>" target="_blank"><img class="image bg-light" src="<?= $item->image ?>" alt="page-image"></img></a>
             <?php endif; ?>
         <?php endif; ?>
 
         <?php if ($create == false && $manage == true) : ?>
-            <a href="<?= $route->get($model . '.edit') . "&id=$item->id" ?>"><img class="icon icon-settings" src="public/images/settings.png"></img></a>
+            <a href="<?= $route->get($model . '.edit') . "&id=$item->id" ?>"><img class="icon icon-settings" src="public/images/settings.png" alt="setting-icon"></img></a>
         <?php endif; ?>
 
         <?php if ($model == "category") : ?>
-            <a href="<?= $route->get('category.show') . "&id=" . $item->id ?>"><img class="image" src="<?= $item->image ?>"></img></a>
-            <img src="public/images/copy.png" alt="#" class="icon icon-copy <?= $item->private ? "d-none" : "" ?>" title="Skopiuj link do udostępnienia" onclick="copyToClipBoard(<?= $index ?>)">
+            <a href="<?= $route->get('category.show') . "&id=" . $item->id ?>"><img class="image" src="<?= $item->image ?>" alt="category-image"></img></a>
+            <img src="public/images/copy.png" alt="copy-image" class="icon icon-copy <?= $item->private ? "d-none" : "" ?>" title="Skopiuj link do udostępnienia" onclick="copyToClipBoard(<?= $index ?>)">
             <input type="hidden" class="copy" value="<?= $url . $route->get('category.public') . "&id=" . $item->id ?>">
         <?php endif; ?>
     </div>
