@@ -1,5 +1,4 @@
 .container {
-   width: 70%;
    margin: 0 auto 0;
 }
 
@@ -20,27 +19,14 @@ img {
 }
 
 @media (max-width: 1536px) {
-   .box-item {
-       width: 33%;
-   }
-
-   .container {
-       width: 80%;
-   }
+   .box-item { width: 33% }
+   .container { width: 80% }
 }
 
 @media (max-width: 1280px) {
-   .box-item {
-       width: 49%;
-   }
-
-   .container {
-       width: 100%;
-   }
-
-   img {
-       height: 135px;
-   }
+   .box-item { width: 49% }
+   .container { width: 100% }
+   img { height: 135px }
 }
 
 .register {
@@ -48,16 +34,9 @@ img {
    width: 300px;
 }
 
-.register button {
-   width: 100%;
-}
+.register button { width: 100% }
 
-@media (max-width: 640px) {
-   .box-item {
-       width: 98%;
-   }
-
-   img {
-       height: 200px;
-   }
+@media (max-width: 768px) {
+   .box-item { width: 98% }
+   img { height: 200px }
 }
