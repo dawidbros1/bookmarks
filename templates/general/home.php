@@ -1,5 +1,5 @@
 <div class="px-3 px-md-4 px-lg-5 py-1">
-   <h1 class="text-center font-bold text-2xl mb-4">Serderznie witamy na stronie</h1>
+   <h1 class="text-center font-bold text-2xl mb-4">Serdecznie witamy na stronie</h1>
 
    <p class="mb-4">
       Serwis, na którym właśnie się znajdujesz, służy do tworzenia linków do zewnętrznych stron. Korzystając z
