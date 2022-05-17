@@ -2,21 +2,18 @@
 Jest to system, który umożliwia udostępnienie wielu linków za pomocą jednego linka.
 
 ## Użyte technologie
-• LARAVEl 8 \
+• PHP 7.4 \
 • BOOTSTRAP 5
 
 ## Funkcjonalności
-• Dodawanie kategorii, podkategorii oraz stron \
-• Sortowanie elementów \
-• Zmiana statusu elementów \
-• Zmiana rodzica dla podkategorii oraz stron \
+• Dodawanie kategorii oraz stron \
+• Zmiana rodzica dla stron \
 • Dostęp do publicznej zawartości bez konieczności logowania
 
 ## Instalacja
 • Pobranie repozytoroum \
-• Utworzenie bazy dancy \
-• Konfiguracja połączenia z bazą danych w pliku **.env** \
-• Uruchomienie polecenia `composer install` \
-• Uruchomienie polecenia `npm install` \
-• Uruchomienie polecenia `php artisan migrate` \
-• Uruchomienie polecenia `php artisan serve`
+• Utworzenie bazy danych \
+• Import bazy danych **sql/database.slq**
+• Konfiguracja pliku **config/config_dist.php** \
+• Zmiana nazwy pliku **config_dist.php** na **config.php** \
+• Uruchomienie polecenia `composer install`
