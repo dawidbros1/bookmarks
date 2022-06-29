@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace App\Controller;
 
@@ -10,23 +10,22 @@ use App\Helper\Request;
 use App\Helper\Session;
 use App\Model\Config;
 use App\Model\Mail;
+use App\Model\Model;
 use App\Model\Route;
 use App\Model\User;
 use App\Repository\Repository;
-use App\Repository\UserRepository;
 use App\Validator\Validator;
 use App\View;
 
 abstract class Controller extends Validator
 {
-    protected static $config;
-    protected static $route;
+    protected static $config = [];
+    protected static $route = [];
 
-    protected $userRepository;
-    protected $hashMethod;
     protected $request;
     protected $view;
     protected $user = null;
+    protected $mail;
 
     public static function initConfiguration(Config $config, Route $route): void
     {
@@ -40,14 +39,14 @@ abstract class Controller extends Validator
             throw new ConfigurationException('Configuration error');
         }
 
+        Model::initConfiguration(self::$config->get('hash.method'));
         Repository::initConfiguration(self::$config->get('db'));
-        Mail::initConfiguration(self::$config->get('mail'));
 
-        $this->hashMethod = self::$config->get('hash.method');
-        $this->userRepository = new UserRepository();
+        $this->mail = new Mail(self::$config->get('mail'));
+        $this->userModel = new User();
 
         if ($id = Session::get('user:id')) {
-            $this->user = $this->userRepository->get((int) $id);
+            $this->user = $this->userModel->find((int) $id);
         }
 
         $this->request = $request;
@@ -59,7 +58,7 @@ abstract class Controller extends Validator
         try {
             $action = $this->action() . 'Action';
             if (!method_exists($this, $action)) {
-                Session::set("error", 'Wybrana akcja nie istnieje');
+                Session::set("error", 'Akcja do której chciałeś otrzymać dostęp nie istnieje');
                 $this->redirect("./");
             }
 
@@ -97,7 +96,7 @@ abstract class Controller extends Validator
 
     // ===== ===== ===== ===== =====
 
-    final protected function guest()
+    final protected function guest(): void
     {
         if ($this->user != null) {
             Session::set("error", "Strona, na którą próbowałeś się dostać, jest dostępna wyłącznie dla użytkowników nie zalogowanych.");
@@ -105,7 +104,7 @@ abstract class Controller extends Validator
         }
     }
 
-    final protected function requireLogin()
+    final protected function requireLogin(): void
     {
         if ($this->user == null) {
             Session::set('lastPage', $this->request->queryString());
@@ -114,7 +113,7 @@ abstract class Controller extends Validator
         }
     }
 
-    final protected function requireAdmin()
+    final protected function requireAdmin(): void
     {
         $this->requireLogin();
         Session::clear('lastPage');
@@ -123,32 +122,5 @@ abstract class Controller extends Validator
             Session::set("error", "Nie posiadasz wystarczających uprawnień do akcji, którą chciałeś wykonać");
             $this->redirect(self::$route->get('home'));
         }
-    }
-
-    protected function uploadFile($path, $FILE)
-    {
-        $target_dir = $path;
-        $type = strtolower(pathinfo($FILE['name'], PATHINFO_EXTENSION));
-        $target_file = $target_dir . basename($FILE["name"]);
-
-        if (move_uploaded_file($FILE["tmp_name"], $target_file)) {
-            return true;
-        } else {
-            Session::set('error', 'Przepraszamy, wystąpił problem w trakcie wysyłania pliku');
-            return false;
-        }
-    }
-
-    protected function hash($param, $method = null)
-    {
-        return hash($method ?? $this->hashMethod, $param);
-    }
-
-    protected function hashFile($file)
-    {
-        $type = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        $name = $this->hash(date('Y-m-d H:i:s') . "_" . $file['name']);
-        $file['name'] = $name . '.' . $type;
-        return $file;
     }
 }

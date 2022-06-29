@@ -10,18 +10,16 @@ use PDO;
 
 class UserRepository extends Repository
 {
-    public function get($param, $type = "id"): ?User
+    public function get($value, $column): ?array
     {
         $user = null;
-        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE $type=:$type");
-        $stmt->execute([$type => $param]);
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE $column=:$column");
+        $stmt->execute([$column => $value]);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($data) {$user = new User($data);}
-        return $user;
+        return $data;
     }
 
-    public function update(User $user, string $property)
+    public function update(User $user, string $property): void
     {
         $user->escape();
         $data = $user->getArray(['id', $property]);

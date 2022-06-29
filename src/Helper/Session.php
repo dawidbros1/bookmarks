@@ -27,17 +27,11 @@ class Session
         } else {
             return null;
         }
-
     }
 
     public static function getNextClear($name)
     {
-        if (Session::has($name) == true) {
-            $value = $_SESSION[$name];
-        } else {
-            $value = null;
-        }
-
+        $value = Session::get($name);
         Session::clear($name);
         return $value;
     }
