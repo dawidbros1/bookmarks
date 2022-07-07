@@ -18,14 +18,32 @@ abstract class Model
         self::$hashMethod = $hashMethod;
     }
 
-    public function find($value, $column = "id")
+    public function find(array $input, string $options = "")
     {
-        if ($data = $this->repository->get($value, $column)) {
+        if ($data = $this->repository->get($input, $options)) {
             $this->update($data);
             return $this;
         }
 
         return null;
+    }
+
+    public function findAll(array $input, string $options = "")
+    {
+        $column = key($input);
+        $value = $input[$column];
+
+        $output = [];
+        $data = $this->repository->getAll($value, $column, $options);
+
+        if ($data) {
+            foreach ($data as $item) {
+                $this->update($item);
+                array_push($output, clone $this);
+            }
+        }
+
+        return $output;
     }
 
     protected function validate($data)
@@ -70,7 +88,7 @@ abstract class Model
             }
 
             if ($value != null) {
-                $this->$key = htmlentities($value);
+                $this->$key = htmlentities((string) $value);
             }
         }
     }

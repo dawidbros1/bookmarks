@@ -11,6 +11,12 @@ use PDO;
 
 class PageRepository extends Repository
 {
+    public function __construct()
+    {
+        $this->table = "pages";
+        parent::__construct();
+    }
+
     public function create(Page $page): void
     {
         $page->escape();

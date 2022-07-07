@@ -83,4 +83,9 @@ class User extends Model
             unlink($this->avatar);
         }
     }
+
+    public static function ID()
+    {
+        return Session::get('user:id', 0);
+    }
 }

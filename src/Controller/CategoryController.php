@@ -8,8 +8,7 @@ use App\Helper\CheckBox;
 use App\Helper\Request;
 use App\Helper\Session;
 use App\Model\Category;
-use App\Repository\CategoryRepository;
-use App\Rules\CategoryRules;
+use App\Model\User;
 use App\View;
 
 class CategoryController extends Controller
@@ -22,8 +21,7 @@ class CategoryController extends Controller
             $this->requireLogin();
         }
 
-        $this->repository = new CategoryRepository();
-        $this->rules = new CategoryRules();
+        $this->model = new Category();
     }
 
     public function createAction()
@@ -34,12 +32,8 @@ class CategoryController extends Controller
         if ($this->request->isPost() && $this->request->hasPostNames($names)) {
             $data = $this->request->postParams($names);
             $data['private'] = CheckBox::get($this->request->postParam('private', false));
-            $data['user_id'] = $this->user->id;
 
-            if ($this->validate($data, $this->rules)) {
-                $category = new Category($data);
-                $this->repository->create($category);
-                Session::set('success', 'Kategoria została utworzona');
+            if ($this->model->create($data)) {
                 $data = [];
             }
 
@@ -53,26 +47,21 @@ class CategoryController extends Controller
     public function listAction()
     {
         View::set(['title' => "Moje kategorie", 'style' => 'item']);
-        $categories = $this->repository->getAll($this->user->id);
+        $categories = $this->model->findAll(["user_id" => User::ID()], "ORDER BY name ASC");
         $this->view->render('category/list', ['categories' => $categories, 'url' => $this->request->url()]);
     }
 
     public function editAction()
     {
         View::set(['title' => "Edycja kategorii"]);
-        $category = $this->category();
+
+        $category = $this->category(false);
         $names = ['name', 'image'];
 
         if ($this->request->isPost() && $this->request->hasPostNames($names)) {
             $data = $this->request->postParams($names);
             $data['private'] = CheckBox::get($this->request->postParam('private', false));
-
-            if ($this->validate($data, $this->rules)) {
-                $category->update($data);
-                $this->repository->update($category);
-                Session::set('success', 'Dane zostały zaktualizowane');
-            }
-
+            $this->model->edit($data);
             $this->redirect(self::$route->get('category.edit') . "&id=" . $category->id);
         } else {
             $this->view->render("category/edit", ['category' => $category]);
@@ -82,9 +71,7 @@ class CategoryController extends Controller
     public function deleteAction()
     {
         if ($this->request->isPost()) {
-            $category = $this->category(true); // MUST BE TRUE
-            $this->repository->delete($category);
-            Session::set('success', 'Kategoria została usunięta');
+            $this->model->delete($this->category(true));
         } else {
             Session::set('error', 'Błąd dostępu do wybranej akcji');
         }
@@ -94,16 +81,14 @@ class CategoryController extends Controller
 
     public function showAction()
     {
-        $category = $this->category();
+        $category = $this->category(true);
         View::set(['title' => $category->name, 'style' => 'item']);
         $this->view->render('category/show', ['category' => $category, 'manage' => true]);
     }
 
     public function publicAction()
     {
-        $id = (int) $this->request->param('id');
-
-        if ($category = $this->repository->get((int) $id, true)) {
+        if ($category = $this->category(true)) {
             if ($category->private == false) {
                 View::set(['title' => $category->name, 'style' => 'item']);
                 $this->view->render('category/show', ['category' => $category, 'manage' => false]);
@@ -115,20 +100,18 @@ class CategoryController extends Controller
         $this->redirect(self::$route->get('home'));
     }
 
-    // =====
-
-    private function category(bool $pages = true)
+    private function category(bool $relation = true)
     {
         $id = (int) $this->request->param('id');
-        $category = null;
 
-        if (!$this->repository->author($this->user, $id)) {
+        if (!$this->model->author($id)) {
             Session::set('error', 'Brak uprawnień do tego zasobu');
             $this->redirect(self::$route->get('category.list'));
         } else {
-            $category = $this->repository->get((int) $id, $pages);
+            $this->model->relation = $relation;
+            $category = $this->model->find(["id" => (int) $id]);
         }
 
-        return $category;
+        return $category ?? null;
     }
 }

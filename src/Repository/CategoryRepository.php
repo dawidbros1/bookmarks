@@ -12,6 +12,12 @@ use PDO;
 
 class CategoryRepository extends Repository
 {
+    public function __construct()
+    {
+        $this->table = "categories";
+        parent::__construct();
+    }
+
     public function create(Category $category): void
     {
         $category->escape();
@@ -30,39 +36,6 @@ class CategoryRepository extends Repository
         } catch (Throwable $e) {
             throw new StorageException('Nie udało się dodać nowej zawartości', 400, $e);
         }
-    }
-
-    public function getAll(int $user_id)
-    {
-        $stmt = $this->pdo->prepare("SELECT * FROM categories WHERE user_id=:user_id ORDER BY name ASC");
-        $stmt->execute(['user_id' => $user_id]);
-
-        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $categories = [];
-
-        foreach ($data as $item) {
-            $categories[] = new Category($item);
-        }
-
-        return $categories;
-    }
-
-    public function get(?int $id, bool $pages)
-    {
-        $category = null;
-        $stmt = $this->pdo->prepare("SELECT * FROM categories WHERE id=:id");
-        $stmt->execute(['id' => $id]);
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($data != false) {
-            $category = new Category($data);
-
-            if ($pages) {
-                $category->pages = $this->pages($category);
-            }
-        }
-
-        return $category;
     }
 
     public function update(Category $category)
@@ -88,10 +61,10 @@ class CategoryRepository extends Repository
         $this->pdo->prepare($sql)->execute(['id' => $category->id]);
     }
 
-    public function author(User $user, $id)
+    public function author(int $id)
     {
         $stmt = $this->pdo->prepare("SELECT * FROM categories WHERE id=:id AND user_id=:user_id");
-        $stmt->execute(['id' => $id, 'user_id' => $user->id]);
+        $stmt->execute(['id' => $id, 'user_id' => User::ID()]);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         if (empty($data)) {return false;} else {return true;};
     }
@@ -103,7 +76,7 @@ class CategoryRepository extends Repository
         $this->pdo->prepare($sql)->execute(['category_id' => $category_id]);
     }
 
-    private function pages(Category $category)
+    public function pages(Category $category)
     {
         $pages = [];
         $stmt = $this->pdo->prepare("SELECT * FROM pages WHERE category_id=:category_id ORDER BY name ASC");

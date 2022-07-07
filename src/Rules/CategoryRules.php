@@ -10,14 +10,14 @@ class CategoryRules extends Rules
 {
     public function rules()
     {
-        $this->createRules('name', ['min' => 3, "max" => 64]);
-        $this->createRules('image', ['require' => true, 'max' => 256]);
+        $this->createRule('name', ['between' => ['min' => 3, 'max' => 64]]);
+        $this->createRule('image', ['require' => true, 'max' => 256]);
     }
 
     public function messages()
     {
         $this->createMessages('name', [
-            'between' => "Nazwa kategorii powinna zawierać od " . $this->value('name.min') . " do " . $this->value('name.max') . " znaków",
+            'between' => "Nazwa kategorii powinna zawierać od " . $this->between('name.min') . " do " . $this->between('name.max') . " znaków",
         ]);
 
         $this->createMessages('image', [

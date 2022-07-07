@@ -10,14 +10,20 @@ use PDO;
 
 class UserRepository extends Repository
 {
-    public function get($value, $column): ?array
+    public function __construct()
     {
-        $user = null;
-        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE $column=:$column");
-        $stmt->execute([$column => $value]);
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $data;
+        $this->table = "users";
+        parent::__construct();
     }
+
+    // public function get($value, $column): ?array
+    // {
+    //     $user = null;
+    //     $stmt = $this->pdo->prepare("SELECT * FROM users WHERE $column=:$column");
+    //     $stmt->execute([$column => $value]);
+    //     $data = $stmt->fetch(PDO::FETCH_ASSOC);
+    //     return $data;
+    // }
 
     public function update(User $user, string $property): void
     {

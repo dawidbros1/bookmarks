@@ -14,12 +14,13 @@ abstract class Repository
     protected $pdo;
     protected static $config;
     protected static $user_id;
+    protected $table;
 
     public static function initConfiguration($config)
     {
         self::$config = $config;
     }
-    
+
     public function __construct()
     {
         try {
@@ -48,5 +49,31 @@ abstract class Repository
         ) {
             throw new ConfigurationException('Storage configuration error');
         }
+    }
+
+    // ===== ===== ===== //
+
+    public function get(array $input, $options)
+    {
+        $conditions = "";
+
+        foreach ($input as $key => $value) {
+            $conditions .= $conditions . " " . $key . "=:" . $key . " AND";
+        }
+
+        $conditions .= " 1";
+
+        $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE $conditions $options");
+        $stmt->execute($input);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $data;
+    }
+
+    public function getAll($value, $column, $options): ?array
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE $column=:$column $options");
+        $stmt->execute([$column => $value]);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
     }
 }
