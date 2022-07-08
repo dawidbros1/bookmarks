@@ -78,6 +78,7 @@ class CategoryRepository extends Repository
 
     public function pages(Category $category)
     {
+        $page = new Page();
         $pages = [];
         $stmt = $this->pdo->prepare("SELECT * FROM pages WHERE category_id=:category_id ORDER BY name ASC");
         $stmt->execute(['category_id' => $category->id]);
@@ -85,7 +86,8 @@ class CategoryRepository extends Repository
 
         if (!empty($data)) {
             foreach ($data as $item) {
-                $pages[] = new Page($item);
+                $page->update($item);
+                $pages[] = clone $page;
             }
         }
 

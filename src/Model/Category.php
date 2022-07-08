@@ -17,7 +17,7 @@ class Category extends Model
     public $image;
     public $private;
     public $pages;
-    public $relation = true;
+    public $relation = false;
 
     public function __construct()
     {
@@ -59,6 +59,7 @@ class Category extends Model
         if (empty($category)) {return false;} else {return true;};
     }
 
+    // @overwrite
     public function find(array $input, $options = "")
     {
         $category = parent::find($input);

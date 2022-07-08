@@ -6,10 +6,9 @@ namespace App\Controller;
 
 use App\Helper\Request;
 use App\Helper\Session;
+use App\Model\Category;
 use App\Model\Page;
-use App\Repository\CategoryRepository;
-use App\Repository\PageRepository;
-use App\Rules\PageRules;
+use App\Model\User;
 use App\View;
 
 class PageController extends Controller
@@ -18,9 +17,8 @@ class PageController extends Controller
     {
         parent::__construct($request);
         $this->requireLogin();
-        $this->repository = new PageRepository();
-        $this->categoryRepository = new CategoryRepository();
-        $this->rules = new PageRules();
+        $this->model = new Page();
+        $this->category = new Category();
     }
 
     public function createAction()
@@ -28,15 +26,14 @@ class PageController extends Controller
         View::set(['title' => "Tworzenie strony"]);
         $category_id = $this->request->param('category_id');
 
-        if ($this->categoryRepository->author($this->user, $category_id)) {
+        $category = $this->category->find(['id' => $category_id, 'user_id' => User::ID()]);
+
+        if ($category != null) {
             $names = ['name', 'image', 'link', 'category_id'];
             if ($this->request->isPost() && $this->request->hasPostNames($names)) {
                 $data = $this->request->postParams($names);
 
-                if ($this->validate($data, $this->rules)) {
-                    $page = new Page($data);
-                    $this->repository->create($page);
-                    Session::set('success', 'Strona została utworzona');
+                if ($this->model->create($data)) {
                     $data = [];
                 }
 
@@ -48,6 +45,7 @@ class PageController extends Controller
                 $data['category_id'] = $category_id;
                 $this->view->render('page/create', $data);
             }
+
         } else {
             Session::set('error', 'Brak uprawnień do tego zasobu');
             $this->redirect('category.list');
@@ -62,20 +60,15 @@ class PageController extends Controller
 
         if ($this->request->isPost() && $this->request->hasPostNames($names)) {
             $data = $this->request->postParams($names);
-
-            if (!$author = $this->categoryRepository->author($this->user, $data['category_id'])) {
+            if (!$author = $this->category->find(["user_id" => User::ID(), "id" => $data['category_id']])) {
                 Session::set('error:category_id:author', 'Nie jesteś autorem wybranej kategorii');
-            }
-
-            if ($this->validate($data, $this->rules) && $author) {
-                $page->update($data);
-                $this->repository->update($page);
-                Session::set('success', 'Dane zostały zaktualizowane');
+            } else {
+                $this->model->edit($data);
             }
 
             $this->redirect(self::$route->get('page.edit') . "&id=" . $page->id);
         } else {
-            $this->view->render("page/edit", ['page' => $page, 'categories' => $this->repository->categories($this->user->id)]);
+            $this->view->render("page/edit", ['page' => $page, 'categories' => $this->category->findAll(['user_id' => User::ID()])]);
         }
     }
 
@@ -84,8 +77,7 @@ class PageController extends Controller
         $page = $this->page();
 
         if ($this->request->isPost()) {
-            $this->repository->delete($page);
-            Session::set('success', 'Strona została usunięta');
+            $this->model->delete($page);
         } else {
             Session::set('error', 'Błąd dostępu do wybranej akcji');
         }
@@ -95,8 +87,9 @@ class PageController extends Controller
 
     private function page()
     {
-        if ($page = $this->repository->get((int) $this->request->param('id'))) {
-            if ($this->categoryRepository->author($this->user, $page->category_id)) {
+        $id = $this->request->param('id');
+        if ($page = $this->model->findById($id)) {
+            if ($this->category->find(["id" => $page->category_id, "user_id" => User::ID()])) {
                 return $page;
             }
         }

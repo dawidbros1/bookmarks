@@ -4,6 +4,10 @@ declare (strict_types = 1);
 
 namespace App\Model;
 
+use App\Helper\Session;
+use App\Repository\PageRepository;
+use App\Rules\PageRules;
+
 class Page extends Model
 {
     public $id;
@@ -14,12 +18,40 @@ class Page extends Model
 
     private static $config;
 
-    public function __construct($data)
+    public function __construct()
     {
-        $this->id = $data['id'] ?? null;
-        $this->category_id = $data['category_id'];
-        $this->name = $data['name'];
-        $this->image = $data['image'];
-        $this->link = $data['link'];
+        $this->rules = new PageRules();
+        $this->repository = new PageRepository();
+    }
+
+    public function create(array $data)
+    {
+        if ($this->validate($data)) {
+            $this->update($data);
+            $this->repository->create($this);
+            Session::set('success', 'Strona została utworzona');
+        }
+    }
+
+    public function edit(array $data)
+    {
+        if ($this->validate($data)) {
+            $this->update($data);
+            $this->repository->update($this);
+            Session::set('success', 'Dane zostały zaktualizowane');
+            return true;
+        }
+        return false;
+    }
+
+    public function delete()
+    {
+        $this->repository->delete($this);
+        Session::set('success', 'Strona została usunięta');
+    }
+
+    public function author()
+    {
+
     }
 }

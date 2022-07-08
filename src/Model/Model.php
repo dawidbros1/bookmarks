@@ -28,6 +28,11 @@ abstract class Model
         return null;
     }
 
+    public function findById($id)
+    {
+        return $this->find(['id' => $id]);
+    }
+
     public function findAll(array $input, string $options = "")
     {
         $column = key($input);
