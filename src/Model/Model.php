@@ -35,11 +35,8 @@ abstract class Model
 
     public function findAll(array $input, string $options = "")
     {
-        $column = key($input);
-        $value = $input[$column];
-
         $output = [];
-        $data = $this->repository->getAll($value, $column, $options);
+        $data = $this->repository->getAll($input, $options);
 
         if ($data) {
             foreach ($data as $item) {

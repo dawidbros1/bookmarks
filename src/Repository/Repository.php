@@ -51,9 +51,27 @@ abstract class Repository
         }
     }
 
-    // ===== ===== ===== //
+    // ===== GETTERS ===== //
 
     public function get(array $input, $options)
+    {
+        $conditions = $this->getConditions($input);
+        $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE $conditions $options");
+        $stmt->execute($input);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $data;
+    }
+
+    public function getAll(array $input, $options): ?array
+    {
+        $conditions = $this->getConditions($input);
+        $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE $conditions $options");
+        $stmt->execute($input);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    }
+
+    private function getConditions(array $input)
     {
         $conditions = "";
 
@@ -63,17 +81,6 @@ abstract class Repository
 
         $conditions .= " 1";
 
-        $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE $conditions $options");
-        $stmt->execute($input);
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $data;
-    }
-
-    public function getAll($value, $column, $options): ?array
-    {
-        $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE $column=:$column $options");
-        $stmt->execute([$column => $value]);
-        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $data;
+        return $conditions;
     }
 }
