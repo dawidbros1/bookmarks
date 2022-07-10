@@ -1,5 +1,3 @@
-<?php $array = ['name', 'id']?>
-
 <div class="form-check mt-2 <?=$params['class'] ?? ""?>">
     <input class="form-check-input" type="checkbox"
         id = "<?=$params['id'] ?? ""?>"

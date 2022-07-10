@@ -18,26 +18,6 @@ class CategoryRepository extends Repository
         parent::__construct();
     }
 
-    public function create(Category $category): void
-    {
-        $category->escape();
-
-        try {
-            $data = [
-                'user_id' => $category->user_id,
-                'name' => $category->name,
-                'image' => $category->image,
-                'private' => $category->private,
-            ];
-
-            $sql = "INSERT INTO categories (name, user_id, image, private) VALUES (:name, :user_id, :image, :private)";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute($data);
-        } catch (Throwable $e) {
-            throw new StorageException('Nie udało się dodać nowej zawartości', 400, $e);
-        }
-    }
-
     public function update(Category $category)
     {
         $category->escape();
@@ -76,17 +56,17 @@ class CategoryRepository extends Repository
         $this->pdo->prepare($sql)->execute(['category_id' => $category_id]);
     }
 
-    public function pages(Category $category)
+    public function pages(int $category_id)
     {
         $page = new Page();
         $pages = [];
         $stmt = $this->pdo->prepare("SELECT * FROM pages WHERE category_id=:category_id ORDER BY name ASC");
-        $stmt->execute(['category_id' => $category->id]);
+        $stmt->execute(['category_id' => $category_id]);
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if (!empty($data)) {
             foreach ($data as $item) {
-                $page->update($item);
+                $page->set($item);
                 $pages[] = clone $page;
             }
         }

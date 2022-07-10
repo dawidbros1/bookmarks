@@ -10,13 +10,7 @@ use App\Rules\UserRules;
 
 class User extends Model
 {
-    public $id;
-    public $username;
-    public $email;
-    public $created;
-    public $password;
-    public $avatar;
-    public $role;
+    protected $fillable = ['id', 'username', 'email', 'password', 'avatar', 'role', 'created'];
 
     public function __construct()
     {

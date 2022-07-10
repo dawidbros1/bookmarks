@@ -5,6 +5,7 @@ declare (strict_types = 1);
 namespace App\Model;
 
 use App\Validator\Validator;
+use App\Helper\Session;
 
 abstract class Model
 {
@@ -21,7 +22,7 @@ abstract class Model
     public function find(array $input, string $options = "")
     {
         if ($data = $this->repository->get($input, $options)) {
-            $this->update($data);
+            $this->set($data);
             return $this;
         }
 
@@ -40,8 +41,7 @@ abstract class Model
 
         if ($data) {
             foreach ($data as $item) {
-                $this->update($item);
-                array_push($output, clone $this);
+                array_push($output, $this->object($item));
             }
         }
 
@@ -58,13 +58,27 @@ abstract class Model
         return self::$validator->validateImage($FILE, $this->rules, $type);
     }
 
-    public function update($data)
+    public function set($data)
     {
-        foreach (array_keys($data) as $key) {
-            if (property_exists($this, $key)) {
-                $this->$key = $data[$key];
+        foreach ($data as $key => $value) {
+            if (in_array($key, $this->fillable)) {
+                $this->$key = $value;
             }
         }
+    }
+
+    public function create(array $data)
+    {
+        $data['user_id'] = User::ID();
+
+        if ($this->validate($data)) {
+            $this->set($data);
+            $this->repository->create($this);
+            Session::set('success', 'Kategoria została utworzona');
+            return true;
+        }
+
+        return false;
     }
 
     public function getArray($array)
@@ -82,15 +96,9 @@ abstract class Model
 
     public function escape()
     {
-        $properties = get_object_vars($this);
-
-        foreach ($properties as $key => $value) {
-            if ($key === "rules" || $key === "repository") {
-                continue;
-            }
-
-            if ($value != null) {
-                $this->$key = htmlentities((string) $value);
+        foreach ($this->fillable as $index => $key) {
+            if (property_exists($this, $key)) {
+                $this->$key = htmlentities((string) $this->$key);
             }
         }
     }
@@ -120,5 +128,13 @@ abstract class Model
             Session::set('error', 'Przepraszamy, wystąpił problem w trakcie wysyłania pliku');
             return false;
         }
+    }
+
+    private function object($data)
+    {
+        $this->set($data);
+        $object = clone $this;
+        unset($object->rules);
+        return $object;
     }
 }

@@ -5,19 +5,13 @@ declare (strict_types = 1);
 namespace App\Model;
 
 use App\Helper\Session;
-use App\Model\User;
 use App\Repository\CategoryRepository;
 use App\Rules\CategoryRules;
 
 class Category extends Model
 {
-    public $id;
-    public $user_id;
-    public $name;
-    public $image;
-    public $private;
-    public $pages;
     public $relation = false;
+    public $fillable = ['id', 'user_id', 'name', 'image', 'private', 'pages'];
 
     public function __construct()
     {
@@ -25,23 +19,10 @@ class Category extends Model
         $this->repository = new CategoryRepository();
     }
 
-    public function create(array $data)
-    {
-        $data['user_id'] = User::ID();
-
-        if ($this->validate($data)) {
-            $this->update($data);
-            $this->repository->create($this);
-            Session::set('success', 'Kategoria została utworzona');
-            return true;
-        }
-        return false;
-    }
-
-    public function edit(array $data)
+    public function update($data)
     {
         if ($this->validate($data)) {
-            $this->update($data);
+            $this->set($data);
             $this->repository->update($this);
             Session::set('success', 'Dane zostały zaktualizowane');
         }
@@ -53,19 +34,19 @@ class Category extends Model
         Session::set('success', 'Kategoria została usunięta');
     }
 
-    public function author($id): bool
-    {
-        $category = $this->find(["id" => $id, "user_id" => User::ID()]);
-        if (empty($category)) {return false;} else {return true;};
-    }
-
-    // @overwrite
+    // @overwrite //
     public function find(array $input, $options = "")
     {
         $category = parent::find($input);
-        if ($this->relation == true) {
-            $category->pages = $this->repository->pages($category);
+
+        if ($category != null) {
+            if ($this->relation == true) {
+                $category->pages = $this->repository->pages((int) $category->id);
+            } else {
+                $category->pages = [];
+            }
         }
+
         return $category;
     }
 }

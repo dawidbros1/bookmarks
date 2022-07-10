@@ -37,10 +37,9 @@ class CategoryController extends Controller
                 $data = [];
             }
 
-            unset($data['user_id'], $data['private']);
             $this->redirect(self::$route->get('category.create'), $data);
         } else {
-            $this->view->render('category/create', $this->request->getParams(['name', 'image']));
+            $this->view->render('category/create', $this->request->getParams(['name', 'image', 'private']));
         }
     }
 
@@ -54,14 +53,13 @@ class CategoryController extends Controller
     public function editAction()
     {
         View::set(['title' => "Edycja kategorii"]);
-
         $category = $this->category(false);
         $names = ['name', 'image'];
 
         if ($this->request->isPost() && $this->request->hasPostNames($names)) {
             $data = $this->request->postParams($names);
             $data['private'] = CheckBox::get($this->request->postParam('private', false));
-            $this->model->edit($data);
+            $category->update($data);
             $this->redirect(self::$route->get('category.edit') . "&id=" . $category->id);
         } else {
             $this->view->render("category/edit", ['category' => $category]);
@@ -103,13 +101,12 @@ class CategoryController extends Controller
     private function category(bool $relation = true)
     {
         $id = (int) $this->request->param('id');
+        $this->model->relation = true;
+        $category = $this->model->find(["id" => $id, "user_id" => User::ID()]);
 
-        if (!$this->model->author($id)) {
+        if ($category == null) {
             Session::set('error', 'Brak uprawnień do tego zasobu');
             $this->redirect(self::$route->get('category.list'));
-        } else {
-            $this->model->relation = $relation;
-            $category = $this->model->find(["id" => (int) $id]);
         }
 
         return $category ?? null;

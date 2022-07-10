@@ -71,6 +71,32 @@ abstract class Repository
         return $data;
     }
 
+    // ===== Create ===== //
+
+    public function create($object)
+    {
+        $object->escape();
+        $data = $object->getArray($object->fillable);
+        $params = "";
+        $values = "";
+
+        for ($i = 0; $i < count($data); $i++) {
+            $params = $params . "" . key($data) . ($i == count($data) - 1 ? "" : ", ");
+            $values = $values . ":" . key($data) . ($i == count($data) - 1 ? "" : ", ");
+            next($data);
+        }
+
+        try {
+            $sql = "INSERT INTO $this->table ($params) VALUES ($values)";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($data);
+
+        } catch (Throwable $e) {
+            throw new StorageException('Nie udało się dodać nowej zawartości', 400, $e);
+        }
+
+    }
+
     private function getConditions(array $input)
     {
         $conditions = "";
