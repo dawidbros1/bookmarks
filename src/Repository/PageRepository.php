@@ -16,22 +16,22 @@ class PageRepository extends Repository
         parent::__construct();
     }
 
-    public function update(Page $page)
-    {
-        $page->escape();
-        $data = [
-            'id' => $page->id,
-            'name' => $page->name,
-            'image' => $page->image,
-            'link' => $page->link,
-            'category_id' => $page->category_id,
-        ];
+    // public function update(Page $page)
+    // {
+    //     $page->escape();
+    //     $data = [
+    //         'id' => $page->id,
+    //         'name' => $page->name,
+    //         'image' => $page->image,
+    //         'link' => $page->link,
+    //         'category_id' => $page->category_id,
+    //     ];
 
-        $sql = "UPDATE pages SET name=:name, image=:image, link=:link, category_id=:category_id WHERE id=:id";
-        $stmt = $this->pdo->prepare($sql);
+    //     $sql = "UPDATE pages SET name=:name, image=:image, link=:link, category_id=:category_id WHERE id=:id";
+    //     $stmt = $this->pdo->prepare($sql);
 
-        $stmt->execute($data);
-    }
+    //     $stmt->execute($data);
+    // }
 
     public function delete(Page $page)
     {

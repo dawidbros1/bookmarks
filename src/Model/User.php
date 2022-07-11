@@ -27,8 +27,7 @@ class User extends Model
     public function updateUsername($data)
     {
         if ($this->validate($data)) {
-            $this->update($data);
-            $this->repository->update($this, 'username');
+            $this->save($data, 'username');
             Session::set('success', "Nazwa użytkownika została zmieniona");
         }
     }
@@ -41,8 +40,7 @@ class User extends Model
 
         if ($this->validate($data) && $same) {
             $data['password'] = $this->hash($data['password']);
-            $this->update($data);
-            $this->repository->update($this, 'password');
+            $this->save($data, 'password');
             Session::set('success', 'Hasło zostało zaktualizowane');
         }
     }
@@ -57,8 +55,7 @@ class User extends Model
                     $this->deleteAvatar();
                 }
 
-                $this->update(['avatar' => $path . $file['name']]);
-                $this->repository->update($this, 'avatar');
+                $this->save(['avatar' => $path . $file['name']], 'avatar');
                 Session::set('success', 'Awatar został zaktualizowany');
             }
         }

@@ -4,8 +4,8 @@ declare (strict_types = 1);
 
 namespace App\Model;
 
-use App\Validator\Validator;
 use App\Helper\Session;
+use App\Validator\Validator;
 
 abstract class Model
 {
@@ -79,6 +79,32 @@ abstract class Model
         }
 
         return false;
+    }
+
+    public function update(array $data, array $toUpdate = [])
+    {
+        if ($this->validate($data)) {
+            $this->set($data);
+
+            if (empty($toUpdate)) {
+                $data = $this->getArray($this->fillable);
+            } else {
+                $data = $this->getArray(['id', ...$toUpdate]);
+            }
+
+            $this->escape();
+            $this->repository->update($data);
+
+            Session::set('success', 'Dane zostały zaktualizowane');
+        }
+    }
+
+    public function save(array $data, string $property)
+    {
+        $this->set($data);
+        $this->escape();
+        $data = $this->getArray(['id', $property]);
+        $this->repository->update($data);
     }
 
     public function getArray($array)

@@ -97,6 +97,20 @@ abstract class Repository
 
     }
 
+    public function update($data)
+    {
+        $params = "";
+
+        for ($i = 0; $i < count($data); $i++) {
+            $params = $params . key($data) . "=:" . key($data) . ($i == count($data) - 1 ? "" : ", ");
+            next($data);
+        }
+
+        $sql = "UPDATE $this->table SET $params WHERE id=:id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($data);
+    }
+
     private function getConditions(array $input)
     {
         $conditions = "";

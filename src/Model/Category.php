@@ -11,21 +11,12 @@ use App\Rules\CategoryRules;
 class Category extends Model
 {
     public $relation = false;
-    public $fillable = ['id', 'user_id', 'name', 'image', 'private', 'pages'];
+    public $fillable = ['id', 'user_id', 'name', 'image', 'private'];
 
     public function __construct()
     {
         $this->rules = new CategoryRules();
         $this->repository = new CategoryRepository();
-    }
-
-    public function update($data)
-    {
-        if ($this->validate($data)) {
-            $this->set($data);
-            $this->repository->update($this);
-            Session::set('success', 'Dane zostały zaktualizowane');
-        }
     }
 
     public function delete($category)

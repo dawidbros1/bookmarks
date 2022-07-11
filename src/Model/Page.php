@@ -10,14 +10,7 @@ use App\Rules\PageRules;
 
 class Page extends Model
 {
-    // public $id;
-    // public $category_id;
-    // public $name;
-    // public $image;
-    // public $link;
-
     protected $fillable = ['id', 'category_id', 'name', 'image', 'link'];
-
     private static $config;
 
     public function __construct()
@@ -26,25 +19,16 @@ class Page extends Model
         $this->repository = new PageRepository();
     }
 
-    // public function create(array $data)
+    // public function edit(array $data)
     // {
     //     if ($this->validate($data)) {
     //         $this->update($data);
-    //         $this->repository->create($this);
-    //         Session::set('success', 'Strona została utworzona');
+    //         $this->repository->update($this);
+    //         Session::set('success', 'Dane zostały zaktualizowane');
+    //         return true;
     //     }
+    //     return false;
     // }
-
-    public function edit(array $data)
-    {
-        if ($this->validate($data)) {
-            $this->update($data);
-            $this->repository->update($this);
-            Session::set('success', 'Dane zostały zaktualizowane');
-            return true;
-        }
-        return false;
-    }
 
     public function delete()
     {

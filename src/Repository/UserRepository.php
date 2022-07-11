@@ -16,20 +16,11 @@ class UserRepository extends Repository
         parent::__construct();
     }
 
-    // public function get($value, $column): ?array
-    // {
-    //     $user = null;
-    //     $stmt = $this->pdo->prepare("SELECT * FROM users WHERE $column=:$column");
-    //     $stmt->execute([$column => $value]);
-    //     $data = $stmt->fetch(PDO::FETCH_ASSOC);
-    //     return $data;
-    // }
-
-    public function update(User $user, string $property): void
+    public function updateProperty(User $user, string $property): void
     {
         $user->escape();
         $data = $user->getArray(['id', $property]);
-        $sql = "UPDATE users SET $property=:$property WHERE id=:id";
+        $sql = "UPDATE $this->table SET $property=:$property WHERE id=:id";
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->execute($data);

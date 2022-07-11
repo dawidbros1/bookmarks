@@ -18,22 +18,6 @@ class CategoryRepository extends Repository
         parent::__construct();
     }
 
-    public function update(Category $category)
-    {
-        $category->escape();
-        $data = [
-            'id' => $category->id,
-            'name' => $category->name,
-            'image' => $category->image,
-            'private' => $category->private,
-        ];
-
-        $sql = "UPDATE categories SET name=:name, image=:image, private=:private WHERE id=:id";
-        $stmt = $this->pdo->prepare($sql);
-
-        $stmt->execute($data);
-    }
-
     public function delete(Category $category)
     {
         $this->deletePages($category->id);
