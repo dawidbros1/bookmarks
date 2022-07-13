@@ -93,7 +93,6 @@ abstract class Repository
         } catch (Throwable $e) {
             throw new StorageException('Nie udało się dodać nowej zawartości', 400, $e);
         }
-
     }
 
     public function update($data)

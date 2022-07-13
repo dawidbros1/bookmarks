@@ -67,23 +67,22 @@ abstract class Model
         }
     }
 
-    public function create(array $data)
+    public function create(array $data, $validate = true)
     {
         $data['user_id'] = User::ID();
 
-        if ($this->validate($data)) {
+        if (($validate === true & $this->validate($data)) || $validate === false) {
             $this->set($data);
             $this->repository->create($this);
-            Session::set('success', 'Kategoria została utworzona');
             return true;
         }
 
         return false;
     }
 
-    public function update(array $data, array $toUpdate = [])
+    public function update(array $data, array $toUpdate = [], $validate = true)
     {
-        if ($this->validate($data)) {
+        if (($validate === true & $this->validate($data)) || $validate === false) {
             $this->set($data);
 
             if (empty($toUpdate)) {

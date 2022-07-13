@@ -4,29 +4,14 @@ declare (strict_types = 1);
 
 namespace App\Repository;
 
-use App\Model\User;
 use PDO;
 
 class AuthRepository extends Repository
 {
-    public function register(User $user): void
+    public function __construct()
     {
-        try {
-            $data = [
-                'username' => $user->username,
-                'email' => $user->email,
-                'password' => $user->password,
-                'avatar' => $user->avatar,
-                'role' => "user",
-                'created' => date('Y-m-d H:i:s'),
-            ];
-
-            $sql = "INSERT INTO users (username, email, password, avatar, role, created) VALUES (:username, :email, :password, :avatar, :role, :created)";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute($data);
-        } catch (Throwable $e) {
-            throw new StorageException('Nie udało się utworzyć nowego konta', 400, $e);
-        }
+        $this->table = "users";
+        parent::__construct();
     }
 
     public function login(string $email, string $password): ?int
