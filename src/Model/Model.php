@@ -114,7 +114,7 @@ abstract class Model
             $this->repository->delete((int) $this->id);
         }
 
-        Session::set('success', 'Element został skasowany');
+        // Session::set('success', 'Element został skasowany');
     }
 
     public function getArray($array)

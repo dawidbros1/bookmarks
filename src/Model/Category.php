@@ -19,6 +19,7 @@ class Category extends Model
         $this->repository = new CategoryRepository();
     }
 
+    // @overwrite //
     public function delete(?int $id = null)
     {
         foreach ($this->pages as $page) {
@@ -26,7 +27,7 @@ class Category extends Model
         }
 
         parent::delete();
-        Session::set('success', 'Kategoria została usunięta');
+        Session::set('success', 'Kategoria ' . $this->name . ' została usunięta');
     }
 
     // @overwrite //
