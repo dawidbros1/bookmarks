@@ -22,10 +22,7 @@ class Category extends Model
     // @overwrite //
     public function delete(?int $id = null)
     {
-        foreach ($this->pages as $page) {
-            $page->delete();
-        }
-
+        $this->repository->deletePages($this->id);
         parent::delete();
         Session::set('success', 'Kategoria ' . $this->name . ' została usunięta');
     }

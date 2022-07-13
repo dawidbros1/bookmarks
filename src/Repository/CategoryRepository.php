@@ -16,22 +16,7 @@ class CategoryRepository extends Repository
         $this->table = "categories";
         parent::__construct();
     }
-
-    // public function delete(Category $category)
-    // {
-    //     $this->deletePages($category->id);
-    //     $sql = "DELETE FROM categories WHERE id = :id";
-    //     $this->pdo->prepare($sql)->execute(['id' => $category->id]);
-    // }
-
-    public function author(int $id)
-    {
-        $stmt = $this->pdo->prepare("SELECT * FROM categories WHERE id=:id AND user_id=:user_id");
-        $stmt->execute(['id' => $id, 'user_id' => User::ID()]);
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (empty($data)) {return false;} else {return true;};
-    }
-
+    
     // Relations
     public function deletePages($category_id)
     {
