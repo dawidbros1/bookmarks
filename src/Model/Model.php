@@ -71,7 +71,7 @@ abstract class Model
     {
         $data['user_id'] = User::ID();
 
-        if (($validate === true & $this->validate($data)) || $validate === false) {
+        if (($validate === true && $this->validate($data)) || $validate === false) {
             $this->set($data);
             $this->repository->create($this);
             return true;
@@ -82,7 +82,7 @@ abstract class Model
 
     public function update(array $data, array $toUpdate = [], $validate = true)
     {
-        if (($validate === true & $this->validate($data)) || $validate === false) {
+        if (($validate === true && $this->validate($data)) || $validate === false) {
             $this->set($data);
 
             if (empty($toUpdate)) {

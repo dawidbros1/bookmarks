@@ -14,21 +14,6 @@ class AuthRepository extends Repository
         parent::__construct();
     }
 
-    public function login(string $email, string $password): ?int
-    {
-        $id = null;
-        $stmt = $this->pdo->prepare("SELECT id FROM users WHERE email=:email AND password=:password");
-        $stmt->execute([
-            'email' => $email,
-            'password' => $password,
-        ]);
-
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($data) {$id = (int) $data['id'];}
-        return $id;
-    }
-
     public function getEmails(): array
     {
         $stmt = $this->pdo->prepare("SELECT email FROM users");
