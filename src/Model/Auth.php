@@ -51,7 +51,7 @@ class Auth extends Model
         if ($status = $this->validate($data)) {
             $user = $this->find(['email' => Session::get($code)]);
             $user->update(['password' => $this->hash($data['password'])], ['password'], false);
-            // Session::clearArray([$code, "created:" . $code]);
+            Session::clearArray([$code, "created:" . $code]);
             Session::set('success', 'Hasło do konta zostało zmienione');
         }
         return $user ?? null;
