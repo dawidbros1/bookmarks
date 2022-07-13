@@ -69,7 +69,7 @@ class CategoryController extends Controller
     public function deleteAction()
     {
         if ($this->request->isPost()) {
-            $this->model->delete($this->category(true));
+            $this->category(true)->delete();
         } else {
             Session::set('error', 'Błąd dostępu do wybranej akcji');
         }
@@ -86,7 +86,7 @@ class CategoryController extends Controller
 
     public function publicAction()
     {
-        if ($category = $this->category(true)) {
+        if ($category = $this->category(true, false)) {
             if ($category->private == false) {
                 View::set(['title' => $category->name, 'style' => 'item']);
                 $this->view->render('category/show', ['category' => $category, 'manage' => false]);
@@ -98,11 +98,16 @@ class CategoryController extends Controller
         $this->redirect(self::$route->get('home'));
     }
 
-    private function category(bool $relation = true)
+    private function category(bool $relation = true, $auth = true)
     {
         $id = (int) $this->request->param('id');
         $this->model->relation = true;
-        $category = $this->model->find(["id" => $id, "user_id" => User::ID()]);
+
+        if ($auth === true) {
+            $category = $this->model->find(["id" => $id, "user_id" => User::ID()]);
+        } else {
+            $category = $this->model->find(["id" => $id]);
+        }
 
         if ($category == null) {
             Session::set('error', 'Brak uprawnień do tego zasobu');
