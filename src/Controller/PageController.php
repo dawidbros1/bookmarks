@@ -63,7 +63,7 @@ class PageController extends Controller
             if (!$author = $this->category->find(["user_id" => User::ID(), "id" => $data['category_id']])) {
                 Session::set('error:category_id:author', 'Nie jesteś autorem wybranej kategorii');
             } else {
-                $this->model->edit($data);
+                $page->update($data);
             }
 
             $this->redirect(self::$route->get('page.edit') . "&id=" . $page->id);
@@ -77,7 +77,7 @@ class PageController extends Controller
         $page = $this->page();
 
         if ($this->request->isPost()) {
-            $this->model->delete($page);
+            $page->delete();
         } else {
             Session::set('error', 'Błąd dostępu do wybranej akcji');
         }

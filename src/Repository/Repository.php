@@ -90,7 +90,6 @@ abstract class Repository
             $sql = "INSERT INTO $this->table ($params) VALUES ($values)";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute($data);
-
         } catch (Throwable $e) {
             throw new StorageException('Nie udało się dodać nowej zawartości', 400, $e);
         }
@@ -109,6 +108,12 @@ abstract class Repository
         $sql = "UPDATE $this->table SET $params WHERE id=:id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($data);
+    }
+
+    public function delete(int $id)
+    {
+        $sql = "DELETE FROM $this->table WHERE id = :id";
+        $this->pdo->prepare($sql)->execute(['id' => $id]);
     }
 
     private function getConditions(array $input)

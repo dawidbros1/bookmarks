@@ -94,7 +94,6 @@ abstract class Model
 
             $this->escape();
             $this->repository->update($data);
-
             Session::set('success', 'Dane zostały zaktualizowane');
         }
     }
@@ -105,6 +104,17 @@ abstract class Model
         $this->escape();
         $data = $this->getArray(['id', $property]);
         $this->repository->update($data);
+    }
+
+    public function delete(?int $id = null)
+    {
+        if ($id !== null) {
+            $this->repository->delete((int) $id);
+        } else {
+            $this->repository->delete((int) $this->id);
+        }
+
+        Session::set('success', 'Element został skasowany');
     }
 
     public function getArray($array)

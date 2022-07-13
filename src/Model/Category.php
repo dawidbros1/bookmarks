@@ -4,7 +4,6 @@ declare (strict_types = 1);
 
 namespace App\Model;
 
-use App\Helper\Session;
 use App\Repository\CategoryRepository;
 use App\Rules\CategoryRules;
 
@@ -19,11 +18,11 @@ class Category extends Model
         $this->repository = new CategoryRepository();
     }
 
-    public function delete($category)
-    {
-        $this->repository->delete($category);
-        Session::set('success', 'Kategoria została usunięta');
-    }
+    // public function delete($category)
+    // {
+    //     $this->repository->delete($category);
+    //     Session::set('success', 'Kategoria została usunięta');
+    // }
 
     // @overwrite //
     public function find(array $input, $options = "")

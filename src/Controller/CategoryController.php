@@ -109,6 +109,6 @@ class CategoryController extends Controller
             $this->redirect(self::$route->get('category.list'));
         }
 
-        return $category ?? null;
+        return $category;
     }
 }

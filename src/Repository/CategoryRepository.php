@@ -4,7 +4,6 @@ declare (strict_types = 1);
 
 namespace App\Repository;
 
-use App\Model\Category;
 use App\Model\Page;
 use App\Model\User;
 use App\Repository\Repository;
@@ -18,12 +17,12 @@ class CategoryRepository extends Repository
         parent::__construct();
     }
 
-    public function delete(Category $category)
-    {
-        $this->deletePages($category->id);
-        $sql = "DELETE FROM categories WHERE id = :id";
-        $this->pdo->prepare($sql)->execute(['id' => $category->id]);
-    }
+    // public function delete(Category $category)
+    // {
+    //     $this->deletePages($category->id);
+    //     $sql = "DELETE FROM categories WHERE id = :id";
+    //     $this->pdo->prepare($sql)->execute(['id' => $category->id]);
+    // }
 
     public function author(int $id)
     {
