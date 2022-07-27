@@ -20,11 +20,19 @@ class Category extends Model
     }
 
     // @overwrite //
+    public function create(array $data, $validate = true)
+    {
+        if (parent::create($data, $validate)) {
+            Session::success("Kategoria została dodana");
+        }
+    }
+
+    // @overwrite //
     public function delete(?int $id = null)
     {
         $this->repository->deletePages($this->id);
         parent::delete();
-        Session::set('success', 'Kategoria ' . $this->name . ' została usunięta');
+        Session::success('Kategoria ' . $this->name . ' została usunięta');
     }
 
     // @overwrite //
