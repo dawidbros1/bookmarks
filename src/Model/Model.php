@@ -93,16 +93,10 @@ abstract class Model
 
             $this->escape();
             $this->repository->update($data);
-            Session::set('success', 'Dane zostały zaktualizowane');
+            Session::success('Dane zostały zaktualizowane'); // Default value
+            return true;
         }
-    }
-
-    public function save(array $data, string $property)
-    {
-        $this->set($data);
-        $this->escape();
-        $data = $this->getArray(['id', $property]);
-        $this->repository->update($data);
+        return false;
     }
 
     public function delete(?int $id = null)
