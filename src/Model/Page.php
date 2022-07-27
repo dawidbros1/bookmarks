@@ -20,9 +20,17 @@ class Page extends Model
     }
 
     // @overwrite //
+    public function create(array $data, $validate = true)
+    {
+        if (parent::create($data, $validate)) {
+            Session::success("Strona została dodana");
+        }
+    }
+
+    // @overwrite //
     public function delete(?int $id = null)
     {
         parent::delete();
-        Session::set('success', 'Strona ' . $this->name . ' została usunięta');
+        Session::success('Strona ' . $this->name . ' została usunięta');
     }
 }
