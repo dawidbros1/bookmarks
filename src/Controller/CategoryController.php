@@ -37,7 +37,7 @@ class CategoryController extends Controller
                 $data = [];
             }
 
-            $this->redirect(self::$route->get('category.create'), $data);
+            $this->redirect('category.create', $data);
         } else {
             $this->view->render('category/create', $this->request->getParams(['name', 'image', 'private']));
         }
@@ -60,7 +60,7 @@ class CategoryController extends Controller
             $data = $this->request->postParams($names);
             $data['private'] = CheckBox::get($this->request->postParam('private', false));
             $category->update($data);
-            $this->redirect(self::$route->get('category.edit') . "&id=" . $category->id);
+            $this->redirect('category.edit', ['id' => $category->id]);
         } else {
             $this->view->render("category/edit", ['category' => $category]);
         }
@@ -74,7 +74,7 @@ class CategoryController extends Controller
             Session::set('error', 'Błąd dostępu do wybranej akcji');
         }
 
-        $this->redirect(self::$route->get('category.list'));
+        $this->redirect('category.list');
     }
 
     public function showAction()
@@ -95,7 +95,7 @@ class CategoryController extends Controller
         }
 
         Session::set('error', 'Brak uprawnień do tego zasobu');
-        $this->redirect(self::$route->get('home'));
+        $this->redirect('home');
     }
 
     private function category(bool $relation = true, $auth = true)
@@ -111,7 +111,7 @@ class CategoryController extends Controller
 
         if ($category == null) {
             Session::set('error', 'Brak uprawnień do tego zasobu');
-            $this->redirect(self::$route->get('category.list'));
+            $this->redirect('category.list');
         }
 
         return $category;
