@@ -25,27 +25,21 @@ class PageController extends Controller
     {
         View::set(['title' => "Tworzenie strony"]);
         $category_id = $this->request->param('category_id');
+        $names = ['name', 'image', 'link', 'category_id'];
 
-        $category = $this->category->find(['id' => $category_id, 'user_id' => User::ID()]);
-
-        if ($category != null) {
-            $names = ['name', 'image', 'link', 'category_id'];
+        if ($this->category->find(['id' => $category_id, 'user_id' => User::ID()]) != null) {
             if ($this->request->isPost() && $this->request->hasPostNames($names)) {
                 $data = $this->request->postParams($names);
 
                 if ($this->model->create($data)) {
-                    $data = [];
+                    $data = $this->request->param('category_id');
                 }
 
-                unset($data['category_id']);
-
-                $this->redirect(self::$route->get('page.create') . "&category_id=" . $category_id, $data);
+                $this->redirect('page.create', $data);
             } else {
-                $data = $this->request->getParams(['name', 'image', 'link']);
-                $data['category_id'] = $category_id;
+                $data = $this->request->getParams($names);
                 $this->view->render('page/create', $data);
             }
-
         } else {
             Session::set('error', 'Brak uprawnień do tego zasobu');
             $this->redirect('category.list');
@@ -66,7 +60,7 @@ class PageController extends Controller
                 $page->update($data);
             }
 
-            $this->redirect(self::$route->get('page.edit') . "&id=" . $page->id);
+            $this->redirect('page.edit', ['id' => $page->id]);
         } else {
             $this->view->render("page/edit", ['page' => $page, 'categories' => $this->category->findAll(['user_id' => User::ID()])]);
         }
@@ -82,7 +76,7 @@ class PageController extends Controller
             Session::set('error', 'Błąd dostępu do wybranej akcji');
         }
 
-        $this->redirect(self::$route->get('category.show') . "&id=" . $page->category_id);
+        $this->redirect('category.show', ['id' => $page->category_id]);
     }
 
     private function page()
@@ -95,6 +89,6 @@ class PageController extends Controller
         }
 
         Session::set('error', 'Brak uprawnień do tego zasobu');
-        $this->redirect(self::$route->get('category.list'));
+        $this->redirect('category.list');
     }
 }
