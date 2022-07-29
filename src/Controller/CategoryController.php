@@ -101,7 +101,7 @@ class CategoryController extends Controller
     private function category(bool $relation = true, $auth = true)
     {
         $id = (int) $this->request->param('id');
-        $this->model->relation = true;
+        $this->model->relation = $relation;
 
         if ($auth === true) {
             $category = $this->model->find(["id" => $id, "user_id" => User::ID()]);
