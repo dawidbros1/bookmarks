@@ -71,7 +71,7 @@ class CategoryController extends Controller
         if ($this->request->isPost()) {
             $this->category(true)->delete();
         } else {
-            Session::set('error', 'Błąd dostępu do wybranej akcji');
+            Session::error('Błąd dostępu do wybranej akcji');
         }
 
         $this->redirect('category.list');
@@ -94,7 +94,7 @@ class CategoryController extends Controller
             }
         }
 
-        Session::set('error', 'Brak uprawnień do tego zasobu');
+        Session::error('Brak uprawnień do tego zasobu');
         $this->redirect('home');
     }
 
@@ -110,7 +110,7 @@ class CategoryController extends Controller
         }
 
         if ($category == null) {
-            Session::set('error', 'Brak uprawnień do tego zasobu');
+            Session::error('Brak uprawnień do tego zasobu');
             $this->redirect('category.list');
         }
 
