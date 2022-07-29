@@ -41,7 +41,7 @@ class PageController extends Controller
                 $this->view->render('page/create', $data);
             }
         } else {
-            Session::set('error', 'Brak uprawnień do tego zasobu');
+            Session::error('Brak uprawnień do tego zasobu');
             $this->redirect('category.list');
         }
     }
@@ -73,7 +73,7 @@ class PageController extends Controller
         if ($this->request->isPost()) {
             $page->delete();
         } else {
-            Session::set('error', 'Błąd dostępu do wybranej akcji');
+            Session::error('Błąd dostępu do wybranej akcji');
         }
 
         $this->redirect('category.show', ['id' => $page->category_id]);
@@ -81,14 +81,13 @@ class PageController extends Controller
 
     private function page()
     {
-        $id = $this->request->param('id');
-        if ($page = $this->model->findById($id)) {
+        if ($page = $this->model->findById($this->request->param('id'))) {
             if ($this->category->find(["id" => $page->category_id, "user_id" => User::ID()])) {
                 return $page;
             }
         }
 
-        Session::set('error', 'Brak uprawnień do tego zasobu');
+        Session::error('Brak uprawnień do tego zasobu');
         $this->redirect('category.list');
     }
 }
