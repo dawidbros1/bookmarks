@@ -25,7 +25,7 @@ $categories = $params['categories'];
         <?php Component::render('form.input', ['type' => "text", 'name' => "link", "description" => "Link do strony", 'value' => $page->link])?>
         <?php Component::render('error', ['type' => "link", 'names' => ['max', 'require']])?>
 
-        <?php Component::render('form.select', ['name' => "category_id", "label" => "Wybierz kategorię", 'search' => $page->category_id, 'options' => $categories])?>
+        <?php Component::render('form.select', ['name' => "category_id", "label" => "Wybierz kategorię", 'selected' => $page->category_id, 'options' => $categories])?>
         <?php Component::render('error', ['type' => "category_id", 'names' => ['author']])?>
 
         <input type="hidden" name="id" value="<?=$page->id?>">
