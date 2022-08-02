@@ -22,9 +22,11 @@ class Category extends Model
     // @overwrite //
     public function create(array $data, $validate = true)
     {
-        if (parent::create($data, $validate)) {
+        if ($status = parent::create($data, $validate)) {
             Session::success("Kategoria została dodana");
         }
+
+        return $status;
     }
 
     // @overwrite //

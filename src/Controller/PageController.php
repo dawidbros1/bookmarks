@@ -32,7 +32,7 @@ class PageController extends Controller
                 $data = $this->request->postParams($names);
 
                 if ($this->model->create($data)) {
-                    $data = $this->request->param('category_id');
+                    $data = $this->request->postParams(['category_id']);
                 }
 
                 $this->redirect('page.create', $data);
