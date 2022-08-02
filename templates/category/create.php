@@ -13,7 +13,7 @@ use App\Component;
 </div>
 
 <div class="p-4">
-    <form action="<?=$route->get('category.create')?>" method="post">
+    <form action="<?=$route->get('category.create')?>" method="post" class="mb-2">
         <?php Component::render('form.input', ['mt' => "mt-0", 'type' => "text", 'name' => "name", "description" => "Nazwa kategorii", 'value' => $params['name'] ?? '', 'prefix' => true])?>
         <?php Component::render('error', ['type' => "name", 'names' => ['between']])?>
 

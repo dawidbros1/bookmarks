@@ -15,11 +15,11 @@ $category = $params['category'];
 </div>
 
 <div class="p-4">
-    <form action="<?=$route->get('category.edit')?>" method="post">
-        <?php Component::render('form.input', ['mt' => "mt-0", 'type' => "text", 'name' => "name", "description" => "Nazwa kategorii", 'value' => $category->name, 'prefix' => true])?>
+    <form action="<?=$route->get('category.edit')?>" method="post" class = "mb-2">
+        <?php Component::render('form.input', ['mt' => "mt-0", 'type' => "text", 'name' => "name", "description" => "Nazwa kategorii", 'value' => $category->name])?>
         <?php Component::render('error', ['type' => "name", 'names' => ['between']])?>
 
-        <?php Component::render('form.input', ['type' => "text", 'name' => "image", "description" => "Adres obrazka", 'value' => $category->image, 'prefix' => true])?>
+        <?php Component::render('form.input', ['type' => "text", 'name' => "image", "description" => "Adres obrazka", 'value' => $category->image])?>
         <?php Component::render('error', ['type' => "image", 'names' => ['max', 'require']])?>
 
         <?php Component::render('form.checkbox', ['class' => "form-check border-top", 'name' => "private", "label" => "Kategoria prywatna", 'checked' => $category->private])?>

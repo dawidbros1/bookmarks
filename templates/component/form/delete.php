@@ -1,5 +1,5 @@
-<div class="collapse <?=$params['class'] ?? ""?>">
-    <p class = "border-top text-center fw-bold"> Czy jesteś pewien, że chcesz usunąć wybrany element? </p>
+<div class="collapse border-top <?=$params['class'] ?? ""?>">
+    <p class = "text-center fw-bold"> Czy jesteś pewien, że chcesz usunąć wybrany element? </p>
 
     <form class = "d-flex" action = "<?=$params['action'] ?? ""?>" method = "POST">
         <input type = "hidden" name = "id" value = "<?=$params['id'] ?? 0?>">
