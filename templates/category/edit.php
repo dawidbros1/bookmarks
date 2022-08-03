@@ -2,7 +2,7 @@
 
 declare (strict_types = 1);
 
-use App\Component;
+use App\Component\Component;
 
 $category = $params['category'];
 
@@ -32,7 +32,7 @@ $category = $params['category'];
         </div>
     </form>
 
-    <?php Component::render('form.delete', ['action' => $route->get('category.delete'), "id" => $category->id, 'target' => ".delete", 'class' => "delete"])?>
+    <?php Component::render('item.form.delete', ['action' => $route->get('category.delete'), "id" => $category->id, 'target' => ".delete", 'class' => "delete"])?>
     <?php Component::render('button.back', ['action' => $route->get('category.list'), 'text' => "Moje kategorie"])?>
 </div>
 

@@ -2,7 +2,7 @@
 
 declare (strict_types = 1);
 
-use App\Component;
+use App\Component\Component;
 use App\Helper\Session;
 
 $page = $params['page'];
@@ -36,7 +36,7 @@ $categories = $params['categories'];
         </div>
     </form>
 
-    <?php Component::render('form.delete', ['action' => $route->get('page.delete'), "id" => $page->id, 'target' => ".delete", 'class' => "delete"])?>
+    <?php Component::render('item.form.delete', ['action' => $route->get('page.delete'), "id" => $page->id, 'target' => ".delete", 'class' => "delete"])?>
     <?php Component::render('button.back', ['action' => $route->get('category.show') . "&id=" . $page->category_id])?>
 </div>
 
