@@ -4,7 +4,7 @@ declare (strict_types = 1);
 
 namespace App\Controller;
 
-use App\Helper\CheckBox;
+use App\Helper\Checkbox;
 use App\Helper\Request;
 use App\Helper\Session;
 use App\Model\Category;
@@ -31,7 +31,7 @@ class CategoryController extends Controller
 
         if ($this->request->isPost() && $this->request->hasPostNames($names)) {
             $data = $this->request->postParams($names);
-            $data['private'] = CheckBox::get($this->request->postParam('private', false));
+            $data['private'] = Checkbox::get($this->request->postParam('private', false));
 
             if ($this->model->create($data)) {
                 $data = [];
@@ -58,7 +58,7 @@ class CategoryController extends Controller
 
         if ($this->request->isPost() && $this->request->hasPostNames($names)) {
             $data = $this->request->postParams($names);
-            $data['private'] = CheckBox::get($this->request->postParam('private', false));
+            $data['private'] = Checkbox::get($this->request->postParam('private', false));
             $category->update($data);
             $this->redirect('category.edit', ['id' => $category->id]);
         } else {

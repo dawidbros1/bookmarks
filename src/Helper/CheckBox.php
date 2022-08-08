@@ -4,7 +4,7 @@ declare (strict_types = 1);
 
 namespace App\Helper;
 
-class CheckBox
+class Checkbox
 {
     public static function get($checkbox)
     {
