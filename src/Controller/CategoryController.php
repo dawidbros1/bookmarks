@@ -8,6 +8,7 @@ use App\Helper\Checkbox;
 use App\Helper\Request;
 use App\Helper\Session;
 use App\Model\Category;
+use App\Model\Page;
 use App\Model\User;
 use App\View;
 
@@ -22,6 +23,7 @@ class CategoryController extends Controller
         }
 
         $this->model = new Category();
+        $this->page = new Page();
     }
 
     public function createAction()
@@ -47,7 +49,7 @@ class CategoryController extends Controller
     {
         View::set(['title' => "Moje kategorie", 'style' => 'item']);
         $categories = $this->model->findAll(["user_id" => User::ID()], "ORDER BY name ASC");
-        $this->view->render('category/list', ['categories' => $categories, 'url' => $this->request->url()]);
+        $this->view->render('category/list', ['categories' => $categories, 'location' => $this->request->url()]);
     }
 
     public function editAction()
@@ -80,6 +82,15 @@ class CategoryController extends Controller
     public function showAction()
     {
         $category = $this->category(true);
+
+        $this->page->set([
+            'name' => "Dodaj stronę",
+            'image' => "public/images/Item/plus.png",
+            'link' => self::$route->get('page.create') . "&category_id=$category->id",
+        ]);
+
+        array_unshift($category->pages, $this->page);
+
         View::set(['title' => $category->name, 'style' => 'item']);
         $this->view->render('category/show', ['category' => $category, 'manage' => true]);
     }
