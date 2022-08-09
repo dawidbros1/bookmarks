@@ -19,8 +19,6 @@ function initDeleteButton() {
     });
 }
 
-function copyToClipBoard(index) {
-    let copyText = document.getElementsByClassName("copy")[index];
-    copyText.select();
-    navigator.clipboard.writeText(copyText.value);
+function copyToClipBoard(element) {
+    navigator.clipboard.writeText(element.dataset.link);
 }
