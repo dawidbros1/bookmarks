@@ -22,8 +22,8 @@ abstract class Rules
         ],
 
         'item' => [
-            'page' => ['item', 'route'],
-            'category' => ['item', 'route'],
+            'page' => ['page', 'route'],
+            'category' => ['category', 'route', 'location'],
             'form' => [
                 'open' => [],
                 'close' => [],
