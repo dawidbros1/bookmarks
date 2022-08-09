@@ -11,7 +11,7 @@ $categories = $params['categories'];
 <div class="p-3 pt-2">
     <div class="row">
         <?php foreach ($categories as $index => $category): ?>
-            <?php Component::render('item.category', ['item' => $category, 'route' => $route, 'url' => $params['url'], 'index' => $index])?>
+            <?php Component::render('item.category', ['category' => $category, 'route' => $route, 'location' => $params['location']])?>
         <?php endforeach;?>
 
         <?php if (empty($categories)): ?>
