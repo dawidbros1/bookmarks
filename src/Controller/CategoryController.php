@@ -23,16 +23,13 @@ class CategoryController extends Controller
         }
 
         $this->model = new Category();
-        $this->page = new Page();
     }
 
     public function createAction()
     {
         View::set(['title' => "Tworzenie kategorii"]);
-        $names = ['name', 'image'];
 
-        if ($this->request->isPost() && $this->request->hasPostNames($names)) {
-            $data = $this->request->postParams($names);
+        if ($data = $this->request->isPost(['name', 'image'])) {
             $data['private'] = Checkbox::get($this->request->postParam('private', false));
 
             if ($this->model->create($data)) {
@@ -56,10 +53,8 @@ class CategoryController extends Controller
     {
         View::set(['title' => "Edycja kategorii"]);
         $category = $this->category(false);
-        $names = ['name', 'image'];
 
-        if ($this->request->isPost() && $this->request->hasPostNames($names)) {
-            $data = $this->request->postParams($names);
+        if ($data = $this->request->isPost(['name', 'image'])) {
             $data['private'] = Checkbox::get($this->request->postParam('private', false));
             $category->update($data);
             $this->redirect('category.edit', ['id' => $category->id]);
@@ -82,14 +77,13 @@ class CategoryController extends Controller
     public function showAction()
     {
         $category = $this->category(true);
-
-        $this->page->set([
+        $page = new Page([
             'name' => "Dodaj stronę",
             'image' => "public/images/Item/plus.png",
             'link' => self::$route->get('page.create') . "&category_id=$category->id",
         ]);
 
-        array_unshift($category->pages, $this->page);
+        array_unshift($category->pages, $page);
 
         View::set(['title' => $category->name, 'style' => 'item']);
         $this->view->render('category/show', ['category' => $category, 'manage' => true]);
