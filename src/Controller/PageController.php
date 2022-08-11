@@ -25,20 +25,16 @@ class PageController extends Controller
     {
         View::set(['title' => "Tworzenie strony"]);
         $category_id = $this->request->param('category_id');
-        $names = ['name', 'image', 'link', 'category_id'];
 
         if ($this->category->find(['id' => $category_id, 'user_id' => User::ID()]) != null) {
-            if ($this->request->isPost() && $this->request->hasPostNames($names)) {
-                $data = $this->request->postParams($names);
-
+            if ($data = $this->request->isPost(['name', 'image', 'link', 'category_id'])) {
                 if ($this->model->create($data)) {
                     $data = $this->request->postParams(['category_id']);
                 }
 
                 $this->redirect('page.create', $data);
             } else {
-                $data = $this->request->getParams($names);
-                $this->view->render('page/create', $data);
+                $this->view->render('page/create', $this->request->getParams(['name', 'image', 'link', 'category_id']));
             }
         } else {
             Session::error('Brak uprawnień do tego zasobu');
@@ -50,14 +46,12 @@ class PageController extends Controller
     {
         View::set(['title' => "Edycja strony"]);
         $page = $this->page();
-        $names = ['name', 'image', 'link', 'id', 'category_id'];
 
-        if ($this->request->isPost() && $this->request->hasPostNames($names)) {
-            $data = $this->request->postParams($names);
-            if (!$author = $this->category->find(["user_id" => User::ID(), "id" => $data['category_id']])) {
-                Session::set('error:category_id:author', 'Nie jesteś autorem wybranej kategorii');
-            } else {
+        if ($data = $this->request->isPost(['name', 'image', 'link', 'id', 'category_id'])) {
+            if ($page->category_id == $data['category_id'] || $this->category->find(["user_id" => User::ID(), "id" => $data['category_id']])) {
                 $page->update($data);
+            } else {
+                Session::set('error:category_id:author', 'Nie jesteś twórcą wybranej kategorii');
             }
 
             $this->redirect('page.edit', ['id' => $page->id]);
