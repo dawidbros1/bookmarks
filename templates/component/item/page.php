@@ -10,7 +10,7 @@ $page = $params['page'];
     <div class="name text-center"> <?=$page->name?></div>
 
     <div class="position-relative">
-        <a href="<?=$page->link?>" target="<?=$params['target'] ?? ""?>"><img class="image bg-light <?=$params['class'] ?? ""?>" src="<?=$page->image?>" alt="page-image"></img></a>
+        <a href="<?=$page->link?>" target="<?=$params['_blank'] ?? "_blank"?>"><img class="image bg-light <?=$params['class'] ?? ""?>" src="<?=$page->image?>" alt="page-image"></img></a>
 
         <?php if ($params['manage'] == true): ?>
             <a href="<?=$params["route"]->get('page.edit') . "&id=$page->id"?>"><img class="icon icon-settings" src="public/images/Item/settings.png" alt="setting-icon"></img></a>
