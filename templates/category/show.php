@@ -3,6 +3,7 @@
 declare (strict_types = 1);
 
 use App\Component\Component;
+use App\Model\Page;
 
 $category = $params['category'];
 $manage = $params['manage'];
@@ -15,12 +16,12 @@ $manage = $params['manage'];
 
         <!-- ITEM => Create Page -->
         <?php if ($manage == true): ?>
-            <?php Component::render('item.page', ['class' => "p-3", 'page' => $category->pages[0], 'route' => $route, 'manage' => false])?>
+            <?php Component::render('item.page', ['class' => "p-3", 'page' => $category->pages[0], 'route' => $route, 'manage' => false, "_blank" => true])?>
             <?php array_shift($category->pages)?>
         <?php endif;?>
 
         <?php foreach ($category->pages as $page): ?>
-            <?php Component::render('item.page', ['page' => $page, 'route' => $route, 'manage' => $manage, 'target' => "_blank"])?>
+            <?php Component::render('item.page', ['page' => $page, 'route' => $route, 'manage' => $manage])?>
         <?php endforeach;?>
     </div>
 </div>
