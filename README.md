@@ -19,6 +19,7 @@ It is a system that allows you to share multiple links with a single link. Proje
 6. Import tables from file `/sql/database.sql` to your database
 
 ## Table of contents
+- [Screen shots](#screen-shots)
 - [Controllers](#controllers)
     - [CategoryController](#categorycontroller)
     - [PageController](#pagecontroller)
@@ -29,7 +30,35 @@ It is a system that allows you to share multiple links with a single link. Proje
     - [CategoryRepository](#categoryrepository)
 - [Components](#components)
     - [Available components](#available-components)
-- [Screen shots](#screen-shots)
+
+## Screen shots
+* **category.create**
+
+![image not found](readme_img/project/category.create.png)
+
+* **category.list**
+
+![image not found](readme_img/project/category.list.png)
+
+* **category.edit**
+
+![image not found](readme_img/project/category.edit.png)
+
+* **page.create**
+
+![image not found](readme_img/project/page.create.png)
+
+* **category.show**
+
+![image not found](readme_img/project/category.show.png)
+
+* **page.edit**
+
+![image not found](readme_img/project/page.edit.hide.png)
+
+* **page.edit** with an expanded field to change the category
+
+![image not found](readme_img/project/page.edit.show.png)
 
 ## Controllers
 ### CategoryController
@@ -129,6 +158,7 @@ private function page()
     $this->redirect('category.list');
 }
 ```
+
 ## Models
 ### Category
 * **create(array $data, $validate = true)**: Method create category.
@@ -236,32 +266,3 @@ Component::render('item.page', [
 
 * **item.form.open**: Component renders start of the form which adds category or page.
 * **item.form.close**: Component renders end of the form which adds category or page.
-
-## Screen shots
-* **category.create**
-
-![image not found](readme_img/project/category.create.png)
-
-* **category.list**
-
-![image not found](readme_img/project/category.list.png)
-
-* **category.edit**
-
-![image not found](readme_img/project/category.edit.png)
-
-* **page.create**
-
-![image not found](readme_img/project/page.create.png)
-
-* **category.show**
-
-![image not found](readme_img/project/category.show.png)
-
-* **page.edit**
-
-![image not found](readme_img/project/page.edit.hide.png)
-
-* **page.edit** with an expanded field to change the category
-
-![image not found](readme_img/project/page.edit.show.png)
