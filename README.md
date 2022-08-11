@@ -1,4 +1,5 @@
 # Bookmarks
+<<<<<<< HEAD
 It is a system that allows you to share multiple links with a single link. Project used [started pack for php](https://github.com/dawidbros1/php-start).
 
 ## Build with
@@ -6,11 +7,25 @@ It is a system that allows you to share multiple links with a single link. Proje
 2. BOOTSTRAP 5
 
 ## Features
+=======
+It is a system that allows you to share multiple links with a single link. 
+Project used [started pack for php](https://github.com/dawidbros1/php-start).
+
+### Build with
+1. PHP 7.4
+2. BOOTSTRAP 5
+
+### Features
+>>>>>>> 181aa0ea65a665b2a4f207e752a7ad743e63f50f
 1. Adding categories and pages
 2. Changing the parent for the pages
 3. Access to public content without logging in
 
+<<<<<<< HEAD
 ## Installation Instructions
+=======
+### Installation Instructions
+>>>>>>> 181aa0ea65a665b2a4f207e752a7ad743e63f50f
 1. Run `git clone https://github.com/dawidbros1/bookmarks.git`
 2. Run `composer install`
 3. Create a MySQL database for the project
@@ -18,6 +33,7 @@ It is a system that allows you to share multiple links with a single link. Proje
 5. Configure your `/config/config.php` file
 6. Import tables from file `/sql/database.sql` to your database
 
+<<<<<<< HEAD
 ## Table of contents
 - [Screen shots](#screen-shots)
 - [Controllers](#controllers)
@@ -266,3 +282,6 @@ Component::render('item.page', [
 
 * **item.form.open**: Component renders start of the form which adds category or page.
 * **item.form.close**: Component renders end of the form which adds category or page.
+=======
+# DOCUMENTATION - IN FUTURE
+>>>>>>> 181aa0ea65a665b2a4f207e752a7ad743e63f50f
