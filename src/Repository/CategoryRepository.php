@@ -5,7 +5,6 @@ declare (strict_types = 1);
 namespace App\Repository;
 
 use App\Model\Page;
-use App\Model\User;
 use App\Repository\Repository;
 use PDO;
 
@@ -16,7 +15,7 @@ class CategoryRepository extends Repository
         $this->table = "categories";
         parent::__construct();
     }
-    
+
     // Relations
     public function deletePages($category_id)
     {
@@ -26,16 +25,14 @@ class CategoryRepository extends Repository
 
     public function pages(int $category_id)
     {
-        $page = new Page();
         $pages = [];
         $stmt = $this->pdo->prepare("SELECT * FROM pages WHERE category_id=:category_id ORDER BY name ASC");
         $stmt->execute(['category_id' => $category_id]);
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if (!empty($data)) {
-            foreach ($data as $item) {
-                $page->set($item);
-                $pages[] = clone $page;
+            foreach ($data as $properties) {
+                $pages[] = new Page($properties);
             }
         }
 
