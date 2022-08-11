@@ -91,12 +91,10 @@ class CategoryController extends Controller
 
     public function publicAction()
     {
-        if ($category = $this->category(true, false)) {
-            if ($category->private == false) {
-                View::set(['title' => $category->name, 'style' => 'item']);
-                $this->view->render('category/show', ['category' => $category, 'manage' => false]);
-                exit();
-            }
+        if (($category = $this->category(true, false)) && $category->private == false) {
+            View::set(['title' => $category->name, 'style' => 'item']);
+            $this->view->render('category/show', ['category' => $category, 'manage' => false]);
+            exit();
         }
 
         Session::error('Brak uprawnień do tego zasobu');
