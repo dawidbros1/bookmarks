@@ -22,7 +22,7 @@ $category = $params['category'];
         <?php Component::render('form.input', ['mt' => "mt-2", 'type' => "text", 'name' => "image", "description" => "Adres obrazka", 'value' => $category->image])?>
         <?php Component::render('error', ['type' => "image", 'names' => ['max', 'require']])?>
 
-        <?php Component::render('form.checkbox', ['mt' => "mt-2", 'name' => "private", "label" => "Kategoria prywatna", 'checked' => $category->private])?>
+        <?php Component::render('form.checkbox', ['mt' => "mt-2", 'name' => "private", "label" => "Kategoria prywatna", 'checked' => $category->private, 'id' => "private"])?>
 
         <input type="hidden" name="id" value="<?=$category->id?>">
 

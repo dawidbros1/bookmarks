@@ -20,7 +20,7 @@ use App\Component\Component;
         <?php Component::render('form.input', ['mt' => "mt-2", 'type' => "text", 'name' => "image", "description" => "Adres obrazka", 'value' => $params['image'] ?? '', 'prefix' => true])?>
         <?php Component::render('error', ['type' => "image", 'names' => ['max', 'require']])?>
 
-        <?php Component::render('form.checkbox', ['mt' => "mt-2", 'class' => "form-check", 'name' => "private", "checked" => $params['private'] ?? 0, "label" => "Kategoria prywatna"])?>
+        <?php Component::render('form.checkbox', ['mt' => "mt-2", 'class' => "form-check", 'name' => "private", "checked" => $params['private'] ?? 0, "label" => "Kategoria prywatna", 'id' => "private"])?>
 
         <?php Component::render('form.submit', ['class' => "btn-success", 'text' => "Utwórz kategorie"])?>
     </form>
