@@ -13,10 +13,11 @@ class Page extends Model
     public $fillable = ['id', 'category_id', 'name', 'image', 'link'];
     private static $config;
 
-    public function __construct()
+    public function __construct(array $data = [])
     {
         $this->rules = new PageRules();
         $this->repository = new PageRepository();
+        $this->set($data);
     }
 
     // @overwrite //

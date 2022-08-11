@@ -13,10 +13,11 @@ class Category extends Model
     public $relation = false;
     public $fillable = ['id', 'user_id', 'name', 'image', 'private'];
 
-    public function __construct()
+    public function __construct(array $data = [])
     {
         $this->rules = new CategoryRules();
         $this->repository = new CategoryRepository();
+        $this->set($data);
     }
 
     // @overwrite //
