@@ -19,7 +19,7 @@ It is a system that allows you to share multiple links with a single link. Proje
 6. Import tables from file `/sql/database.sql` to your database
 
 ## Table of contents
-- [Screen shots](#screen-shots)
+- [Screenshots](#screenshots)
 - [Controllers](#controllers)
     - [CategoryController](#categorycontroller)
     - [PageController](#pagecontroller)
@@ -31,7 +31,7 @@ It is a system that allows you to share multiple links with a single link. Proje
 - [Components](#components)
     - [Available components](#available-components)
 
-## Screen shots
+## Screenshots
 * **category.create**
 
 ![image not found](readme_img/project/category.create.png)
