@@ -32,31 +32,17 @@ It is a system that allows you to share multiple links with a single link. Proje
     - [Available components](#available-components)
 
 ## Screenshots
-* **category.create**
-
 ![image not found](readme_img/project/category.create.png)
-
-* **category.list**
 
 ![image not found](readme_img/project/category.list.png)
 
-* **category.edit**
-
 ![image not found](readme_img/project/category.edit.png)
-
-* **page.create**
 
 ![image not found](readme_img/project/page.create.png)
 
-* **category.show**
-
 ![image not found](readme_img/project/category.show.png)
 
-* **page.edit**
-
 ![image not found](readme_img/project/page.edit.hide.png)
-
-* **page.edit** with an expanded field to change the category
 
 ![image not found](readme_img/project/page.edit.show.png)
 
