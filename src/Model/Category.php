@@ -5,20 +5,11 @@ declare (strict_types = 1);
 namespace App\Model;
 
 use App\Helper\Session;
-use App\Repository\CategoryRepository;
-use App\Rules\CategoryRules;
 
 class Category extends Model
 {
     public $relation = false;
     public $fillable = ['id', 'user_id', 'name', 'image', 'private'];
-
-    public function __construct(array $data = [])
-    {
-        $this->rules = new CategoryRules();
-        $this->repository = new CategoryRepository();
-        $this->set($data);
-    }
 
     // @overwrite //
     public function create(array $data, $validate = true)
@@ -39,7 +30,7 @@ class Category extends Model
     }
 
     // @overwrite //
-    public function find(array $input, $options = "")
+    public function find(array $input, $options = "", $onlyFillable = false)
     {
         $category = parent::find($input);
 
