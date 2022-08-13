@@ -16,7 +16,7 @@ $manage = $params['manage'];
 
         <!-- ITEM => Create Page -->
         <?php if ($manage == true): ?>
-            <?php Component::render('item.page', ['class' => "p-3", 'page' => $category->pages[0], 'route' => $route, 'manage' => false, "_blank" => true])?>
+            <?php Component::render('item.page', ['class' => "p-3", 'page' => $category->pages[0], 'route' => $route, 'manage' => false, "_blank" => ""])?>
             <?php array_shift($category->pages)?>
         <?php endif;?>
 
