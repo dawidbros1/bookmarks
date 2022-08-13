@@ -176,7 +176,7 @@ if ($this->relation == true) {
 public function deletePages($category_id)
 {
     $sql = "DELETE FROM pages WHERE category_id = :category_id";
-    $this->pdo->prepare($sql)->execute(['category_id' => $category_id]);
+    self::$pdo->prepare($sql)->execute(['category_id' => $category_id]);
 }
 ```
 
@@ -185,7 +185,7 @@ public function deletePages($category_id)
 public function pages(int $category_id)
 {
     $pages = [];
-    $stmt = $this->pdo->prepare("SELECT * FROM pages WHERE category_id=:category_id ORDER BY name ASC");
+    $stmt = self::$pdo->prepare("SELECT * FROM pages WHERE category_id=:category_id ORDER BY name ASC");
     $stmt->execute(['category_id' => $category_id]);
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
