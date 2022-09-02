@@ -32,6 +32,8 @@ It is a system that allows you to share multiple links with a single link. Proje
     - [Available components](#available-components)
 
 ## Screenshots
+<kbd>
+
 ![image not found](readme_img/project/category.create.png)
 
 ![image not found](readme_img/project/category.list.png)
@@ -45,6 +47,8 @@ It is a system that allows you to share multiple links with a single link. Proje
 ![image not found](readme_img/project/page.edit.hide.png)
 
 ![image not found](readme_img/project/page.edit.show.png)
+
+</kbd>
 
 ## Controllers
 ### CategoryController
