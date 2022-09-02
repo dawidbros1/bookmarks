@@ -14,7 +14,7 @@ It is a system that allows you to share multiple links with a single link. Proje
 1. Run `git clone https://github.com/dawidbros1/bookmarks.git`
 2. Run `composer install`
 3. Create a MySQL database for the project
-4. From the project root folder run cd `/config/` and next `copy config_dist.php config.php`
+4. From the project root folder run `cd config` and next `copy config_dist.php config.php`
 5. Configure your `/config/config.php` file
 6. Import tables from file `/sql/database.sql` to your database
 
