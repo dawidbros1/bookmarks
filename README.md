@@ -14,7 +14,7 @@ It is a system that allows you to share multiple links with a single link. Proje
 1. Run `git clone https://github.com/dawidbros1/bookmarks.git`
 2. Run `composer install`
 3. Create a MySQL database for the project
-4. From the project root folder run cd `/config/` and next `rename config_dist.php config.php`
+4. From the project root folder run `cd config` and next `copy config_dist.php config.php`
 5. Configure your `/config/config.php` file
 6. Import tables from file `/sql/database.sql` to your database
 
@@ -32,6 +32,8 @@ It is a system that allows you to share multiple links with a single link. Proje
     - [Available components](#available-components)
 
 ## Screenshots
+<kbd>
+
 ![image not found](readme_img/project/category.create.png)
 
 ![image not found](readme_img/project/category.list.png)
@@ -45,6 +47,8 @@ It is a system that allows you to share multiple links with a single link. Proje
 ![image not found](readme_img/project/page.edit.hide.png)
 
 ![image not found](readme_img/project/page.edit.show.png)
+
+</kbd>
 
 ## Controllers
 ### CategoryController
