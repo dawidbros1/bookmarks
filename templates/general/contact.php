@@ -2,7 +2,7 @@
 
 <?php
 
-use App\Component;
+use App\Component\Component;
 use App\Helper\Session;
 
 ?>
@@ -65,12 +65,11 @@ use App\Helper\Session;
                     <label for="message">Wiadomość</label>
                 </div>
 
-
                 <div class="g-recaptcha" data-sitekey="<?=$params['sideKey']?>"></div>
 
-                <?php Component::render('error', ['text' => Session::getNextClear('error:reCAPTCHA:robot')])?>
+                <?php Component::render('error', ['type' => "reCAPTCHA", 'names' => ['robot']])?>
 
-                <button class = "mt-1">Wyślij wiadomość</button>
+                <button class = "mt-2">Wyślij wiadomość</button>
             </form>
         </div>
     </div>
