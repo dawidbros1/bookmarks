@@ -6,7 +6,7 @@ namespace App;
 
 class View
 {
-    private $user;
+    private $user, $route, $params;
     private static $style = null;
     private static $title = "Brak tytułu";
 
@@ -33,24 +33,24 @@ class View
         $route = $this->route;
         $style = self::$style;
         $title = self::$title;
+
+        $params = $this->escape($params);
         require_once 'templates/layout/main.php';
     }
 
     private function escape(array $params): array
     {
         $clearParams = [];
+
         foreach ($params as $key => $param) {
-
-            if (gettype($params === "object")) {
-                $clearParams[$key] = $param;
-                continue;
-            }
-
             switch (true) {
                 case is_array($param):
                     $clearParams[$key] = $this->escape($param);
                     break;
-                case is_int($param):
+                case gettype($param) === 'object':
+                    $clearParams[$key] = $param->escape();
+                    break;
+                case is_int($param) || is_bool($param):
                     $clearParams[$key] = $param;
                     break;
                 case $param:

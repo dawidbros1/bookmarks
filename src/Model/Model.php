@@ -12,6 +12,8 @@ abstract class Model
     protected static $validator = null;
     protected static $hashMethod = null;
 
+    protected $rules, $repository;
+
     public static function initConfiguration($hashMethod)
     {
         self::$validator = new Validator();
@@ -153,6 +155,8 @@ abstract class Model
                 $this->$key = htmlentities((string) $this->$key);
             }
         }
+
+        return $this;
     }
 
     public function hash($param, $method = null): string

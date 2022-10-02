@@ -89,7 +89,7 @@ abstract class Controller extends Validator
         exit();
     }
 
-    final private function action(): string
+    private function action(): string
     {
         return $this->request->getParam('action', "home");
     }
