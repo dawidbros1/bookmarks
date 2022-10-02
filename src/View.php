@@ -6,7 +6,7 @@ namespace App;
 
 class View
 {
-    private $user, $route, $params;
+    private $user, $route;
     private static $style = null;
     private static $title = "Brak tytułu";
 
@@ -35,6 +35,9 @@ class View
         $title = self::$title;
 
         $params = $this->escape($params);
+        // dump($params);
+
+        // die();
         require_once 'templates/layout/main.php';
     }
 
@@ -48,7 +51,17 @@ class View
                     $clearParams[$key] = $this->escape($param);
                     break;
                 case gettype($param) === 'object':
-                    $clearParams[$key] = $param->escape();
+                    $clearParams[$key] = $param->escape(); // simple type: 'key' => 'value'
+
+                    foreach ($param as $key2 => $value) {
+                        if ($key2 == "fillable") {
+                            continue;
+                        }
+
+                        if (gettype($value) === "array" || gettype($value) === "object") {
+                            $clearParams[$key]->$key2 = $this->escape($value); // complex type
+                        }
+                    }
                     break;
                 case is_int($param) || is_bool($param):
                     $clearParams[$key] = $param;
