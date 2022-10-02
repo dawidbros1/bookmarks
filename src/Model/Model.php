@@ -111,6 +111,7 @@ abstract class Model
     {
         if (($validate === true && $this->validate($data)) || $validate === false) {
             $this->set($data);
+            $this->escape();
 
             if (empty($toUpdate)) {
                 $data = $this->getArray($this->fillable);
@@ -118,7 +119,6 @@ abstract class Model
                 $data = $this->getArray(['id', ...$toUpdate]);
             }
 
-            $this->escape();
             $this->repository->update($data);
             Session::success('Dane zostały zaktualizowane'); // Default value
             return true;
@@ -153,18 +153,7 @@ abstract class Model
     {
         foreach ($this->fillable as $index => $property) {
             if (property_exists($this, $property)) {
-                // $value = $this->$property;
-
-                // if (gettype($value) === "array") {
-                //     $array = $value;
-                //     dump($array);
-                // }
-
-                // if (gettype($value) === "object") {
-                //     dump($value);
-                // }
-
-                $this->$property = htmlentities((string) $this->$property);
+                $this->$property = htmlentities((string) $this->$property, ENT_QUOTES);
             }
         }
 

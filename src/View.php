@@ -35,9 +35,7 @@ class View
         $title = self::$title;
 
         $params = $this->escape($params);
-        // dump($params);
 
-        // die();
         require_once 'templates/layout/main.php';
     }
 
@@ -51,23 +49,24 @@ class View
                     $clearParams[$key] = $this->escape($param);
                     break;
                 case gettype($param) === 'object':
-                    $clearParams[$key] = $param->escape(); // simple type: 'key' => 'value'
+                    $clearParams[$key] = $param; // simple type: 'key' => 'value'
+                    // $clearParams[$key] = $param->escape(); // simple type: 'key' => 'value'
 
-                    foreach ($param as $key2 => $value) {
-                        if ($key2 == "fillable") {
-                            continue;
-                        }
+                    // foreach ($param as $key2 => $value) {
+                    //     if ($key2 == "fillable") {
+                    //         continue;
+                    //     }
 
-                        if (gettype($value) === "array" || gettype($value) === "object") {
-                            $clearParams[$key]->$key2 = $this->escape($value); // complex type
-                        }
-                    }
+                    //     if (gettype($value) === "array" || gettype($value) === "object") {
+                    //         $clearParams[$key]->$key2 = $this->escape($value); // complex type
+                    //     }
+                    // }
                     break;
                 case is_int($param) || is_bool($param):
                     $clearParams[$key] = $param;
                     break;
                 case $param:
-                    $clearParams[$key] = htmlentities($param);
+                    $clearParams[$key] = htmlentities($param, ENT_QUOTES);
                     break;
                 default:
                     $clearParams[$key] = $param;
