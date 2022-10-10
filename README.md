@@ -1,5 +1,5 @@
 # Bookmarks
-It is a system that allows you to share multiple links with a single link. Project used [started pack for php](https://github.com/dawidbros1/php-start).
+It is a system that allows you to share multiple links with a single link. Project used [started pack for php](https://github.com/dawidbros1/php-start/tree/version_1.0).
 
 ## Build with
 1. PHP 7.4
