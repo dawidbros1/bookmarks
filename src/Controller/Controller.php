@@ -21,11 +21,12 @@ abstract class Controller extends Validator
 {
     protected static $config = [];
     protected static $route = [];
-
+    protected $model;
     protected $request;
     protected $view;
     protected $user = null;
     protected $mail;
+    private $userModel;
 
     public static function initConfiguration(Config $config, Route $route): void
     {

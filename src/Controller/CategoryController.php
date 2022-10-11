@@ -83,6 +83,7 @@ class CategoryController extends Controller
             'link' => self::$route->get('page.create') . "&category_id=$category->id",
         ]);
 
+        # To pages from category we adds item to create page 
         array_unshift($category->pages, $page);
 
         View::set(['title' => $category->name, 'style' => 'item']);

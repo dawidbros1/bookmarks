@@ -13,6 +13,8 @@ use App\View;
 
 class PageController extends Controller
 {
+    private $category;
+
     public function __construct(Request $request)
     {
         parent::__construct($request);
@@ -73,6 +75,7 @@ class PageController extends Controller
         $this->redirect('category.show', ['id' => $page->category_id]);
     }
 
+    # Method returns page, checking if page exists and we are creator of category
     private function page()
     {
         if ($page = $this->model->findById($this->request->param('id'))) {
