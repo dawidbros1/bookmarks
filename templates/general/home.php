@@ -2,45 +2,63 @@
    <h1 class="text-center font-bold text-2xl mb-4">Serdecznie witamy na stronie</h1>
 
    <p class="mb-4">
-      Serwis, na którym właśnie się znajdujesz, służy do tworzenia linków do zewnętrznych stron. Korzystając z
-      naszego serwisu, możesz udostępnić zgromadzone przez siebie grupy odnośników znajomym za pomocą
-      pojedynczego linka.
+      Chcesz mieć szybki dostęp do swoich ulubionych stron bez konieczności szukania ich w zakładkach przeglądarki? Nasza aplikacja umożliwia łatwe zarządzanie linkami i dostęp do nich z każdego urządzenia. Dzięki przyjaznemu graficznemu interfejsowi możesz tworzyć foldery i udostępniać je znajomym. Skorzystaj z naszej aplikacji i uporządkuj swoje linki już dziś!
    </p>
 
-   <div class="justify-center d-flex flex-wrap">
-      <div class="box-item">
-         <div class="title">Szybki dostęp do ulubionych stron</div>
-         <img src="./public/images/Home/fast.jpg" />
+   <div class="col-12 col-md-10 col-xl-7 col-xxl-5 mx-auto">
+      <div class="row box">
+         <div class="col-4"><img src="./public/images/Home/fast.jpg" class="img-fluid" alt="Zdjęcie 1"></div>
+         <div class="col-8">
+            <div class="text-center fw-bold">Szybki dostęp do ulubionych stron</div>
+            <div>
+               Dzięki naszemu serwisowi szybko znajdziesz swoje ulubione strony bez konieczności ich szukania w
+               zakładkach przeglądarki.
+            </div>
+         </div>
       </div>
 
-      <div class="box-item">
-         <div class="title">Dostęp z każdego urządzenia</div>
-         <img src="./public/images/Home/responsive.png" />
+      <div class="row box">
+         <div class="col-8">
+            <div class="text-center fw-bold">Dostęp z każdego urządzenia</div>
+            <div>
+               Niezależnie od tego, czy korzystasz z komputera, tabletu czy telefonu, nasz serwis jest dostępny na
+               wszystkich urządzeniach.
+            </div>
+         </div>
+         <div class="col-4"><img src="./public/images/Home/responsive.png" class="img-fluid" alt="Zdjęcie 1"></div>
       </div>
 
-      <div class="box-item">
-         <div class="title">Graficzny interfejs</div>
-         <img src="./public/images/Home/interface.jpg" />
+      <div class="row box">
+         <div class="col-4"><img src="./public/images/Home/interface.jpg" class="img-fluid" alt="Zdjęcie 1"></div>
+         <div class="col-8">
+            <div class="text-center fw-bold">Graficzny interfejs</div>
+            <div>
+               Dzięki przyjaznemu dla oka interfejsowi korzystanie z naszego serwisu jest proste i przyjemne.
+            </div>
+         </div>
       </div>
 
-      <div class="box-item">
-         <div class="title">Udostępniaj zawartości znajomym</div>
-         <img src="./public/images/Home/sharing.jpg" />
+      <div class="row box">
+         <div class="col-8">
+            <div class="text-center fw-bold">Udostępniaj zawartości znajomym</div>
+            <div>Dzięki naszemu serwisowi możesz łatwo dzielić się swoimi ulubionymi stronami z przyjaciółmi i rodziną.
+            </div>
+         </div>
+         <div class="col-4"><img src="./public/images/Home/sharing.jpg" class="img-fluid" alt="Zdjęcie 1"></div>
       </div>
 
-      <div class="box-item">
-         <div class="title">Umieszczaj elementy w folderach</div>
-         <img src="./public/images/Home/subfolders.jpg" />
-      </div>
-
-      <div class="box-item">
-         <div class="title">Dowolnie rozmieszczaj elementy</div>
-         <img src="./public/images/Home/sort.jpg" />
+      <div class="row box">
+         <div class="col-4"><img src="./public/images/Home/subfolders.jpg" class="img-fluid" alt="Zdjęcie 1"></div>
+         <div class="col-8">
+            <div class="text-center fw-bold">Umieszczaj strony w folderach</div>
+            <div> Za pomocą naszego serwisu możesz tworzyć foldery i umieszczać w nich swoje ulubione strony, aby je
+               łatwo znaleźć w przyszłości.
+            </div>
+         </div>
       </div>
    </div>
-</div>
 
-<?php if (!$user): ?>
+   <?php if (!$user): ?>
    <div class="px-6 py-1 mt-4 register pb-4">
       <div class="text-center"> Nie masz jeszcze konta? </div>
       <a href="<?=$route->get('auth.register')?>">
@@ -49,4 +67,4 @@
          </button>
       </a>
    </div>
-<?php endif;?>
+   <?php endif;?>
