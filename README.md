@@ -43,25 +43,6 @@ It is a system that allows you to share multiple links with a single link. Proje
 
 </kbd>
 
-## Models
-### Category
-* **create(array $data, $validate = true)**: Method create category.
-
-* **delete(?int $id = null)**: Method deletes category and pages from category.
-```
-$this->repository->deletePages($this->id);
-parent::delete();
-```
-
-* **find(array $input, $options = "")**: Method gets pages of category if the property relation is set to value true.
-```
-$category = parent::find($input);
-...
-if ($this->relation == true) {
-    $category->pages = $this->repository->pages((int) $category->id);
-}
-```
-
 ## Components
 * **item.category**: Component renders category in (category.list).
 ```
