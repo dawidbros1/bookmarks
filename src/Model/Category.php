@@ -11,7 +11,8 @@ class Category extends Model
     public $relation = false;
     public $fillable = ['id', 'user_id', 'name', 'image', 'private'];
 
-    // @overwrite //
+    # @overwrite
+    # Method create category    
     public function create(array $data, $validate = true)
     {
         if ($status = parent::create($data, $validate)) {
@@ -21,7 +22,8 @@ class Category extends Model
         return $status;
     }
 
-    // @overwrite //
+    # @overwrite
+    # Method delete category with pages
     public function delete(?int $id = null)
     {
         $this->repository->deletePages($this->id);
@@ -29,7 +31,8 @@ class Category extends Model
         Session::success('Kategoria ' . $this->name . ' została usunięta');
     }
 
-    // @overwrite //
+    # @overwrite
+    # Method returns category (with pages if $relation == true)
     public function find(array $input, $options = "", $onlyFillable = false)
     {
         $category = parent::find($input);
